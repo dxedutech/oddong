@@ -1,41 +1,15 @@
-.fpt {
-	font-family: 'PlayTangram', sans-serif;
-	color: #ffffff;
-}
+.fpt { font-family: 'PlayTangram', sans-serif; color: #ffffff; }
+.fbb { font-family: 'baby_bb33', sans-serif; }
 
-.fbb {
-	font-family: 'baby_bb33', sans-serif;
-}
-
-.this {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-
-	margin: 0;
-	padding: 0;
-	background-color: transparent;
-}
+.this { display: flex; justify-content: center; align-items: center; height: 100%; margin: 0; padding: 0; background-color: transparent; }
 
 
 
-
-
-html,
-body {
-	display: flex;
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	background: #222;
-	justify-content: center;
-	align-items: center;
-	overflow: hidden;
-}
-
-article { width: 100%; height: 100%; }
+html, body { display: flex; width: 100%; height: 100%; margin: 0; padding: 0; background: #222; justify-content: center; align-items: center; overflow: hidden; }
+body>main, article, .sheet { width: var(--w); height: var(--h); }
+/* body>div, article, .sheet { width: 100%; height: 100%; }  */
+article { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
+.so { position: absolute; }
 
 /* iframe body {
   @font-face { font-family: "PlayTangram"; src: url("../with/fonts/PlayTangram.woff"); }
@@ -56,19 +30,13 @@ article { width: 100%; height: 100%; }
   }
 }   */
 
-.so { position: absolute; }
+
 
 
 /* <.sheet.fgs ////////////////////////////////////////////////// */
 /* <.so.tangram */
-.sheet.fgs .so.tangram {
-	width: 100%;
-	height: 100%;
-}
-
-.sheet.fgs .so.tangram svg g text {
-	user-select: none;
-}
+.sheet.fgs .so.tangram { width: 100%; height: 100%; }
+.sheet.fgs .so.tangram svg g text { user-select: none; }
 
 /* >.so.tangram */
 
