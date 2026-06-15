@@ -333,8 +333,8 @@ const btnstangram = {
 		v.c = e.className.match(/on/) ? 'none' : 'block';
 		v.e = document.querySelector('.sheet.uis .so.gride');
 		v.e.style.display = v.c;
-		v.e = document.querySelector('.sheet.bgs .bg-title');
-		v.e.style.display = v.c;
+		// v.e = document.querySelector('.sheet.bgs .bg-title');
+		// v.e.style.display = v.c;
 
 		e.classList.toggle('on');
 	},
