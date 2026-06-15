@@ -17,15 +17,10 @@ export default (r => {
 
 		v.d = document.querySelector('main');
 
-		const resizeObserver = new ResizeObserver(entries => {
-			for (let entry of entries) {
-				const { width, height } = entry.contentRect;
-				r.r = Math.min(width / r.wh.w, height / r.wh.h);
-				v.d.style.transform = `scale(${r.r})`;
-			}
-
-			v.d.style.width = `${r.wh.w}px`;
-      v.d.style.height = `${r.wh.h}px`;
+		const resizeObserver = new ResizeObserver(e => {
+			const { width, height } = e[0].contentRect;
+			r.r = Math.min(width / r.wh.w, height / r.wh.h);
+			v.d.style.transform = `scale(${r.r})`;
 
       r.hv.h = window.innerWidth*0.5 - r.wh.w*r.r*0.5;
       r.hv.v = window.innerHeight*0.5 - r.wh.h*r.r*0.5;
