@@ -257,7 +257,7 @@ const btnstangram = {
 		const { e, o, w } = v;
 
 		v.n = []; /// gride point [[0,0], [128,0]... [1280,1280]]
-		for (i = 0; i < 121; i++) {
+		for (let i = 0; i < 121; i++) {
 			v.x = i % 11;
 			v.y = parseInt(i / 11);
 
