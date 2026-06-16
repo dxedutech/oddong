@@ -139,8 +139,7 @@ else window.addEventListener('load', (e) => loy[loy.fu]({}));
 	(async () => {
 
 		await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
-		// x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
-		x.envm.resizeu({ w: x.envm.wh.w, h: x.envm.wh.h });
+		x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
 
 		await x.importmoduleu({ m: `${dx.basePath}/wore/btn.js` });
 

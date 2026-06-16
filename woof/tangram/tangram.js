@@ -664,8 +664,8 @@ const cardu = (v) => {
 		// await x.loadfontu('/www/with/fonts/PlayTangram.woff');
 
 		await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
-		// x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
-		x.envm.resizeu({ w: x.envm.wh.w, h: x.envm.wh.h });
+		x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
+	
 		// await x.loadFetch({ u: '/www/work/tangram/tangram.xml', p: '.sheet.bgs' });
 
 		// w.r = x.envm.r;
