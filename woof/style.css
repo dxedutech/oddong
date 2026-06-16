@@ -1,18 +1,11 @@
-@font-face {
-	font-family: "PlayTangram";
-	src: url("../woad/font/PlayTangram.woff2") format("woff2");
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "baby_bb33";
-	src: url("../woad/font/baby_bb33.woff2") format("woff2");
-	font-display: swap;
-}
+@font-face { font-family: "PlayTangram"; src: url("../woad/font/PlayTangram.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "baby_bb33"; src: url("../woad/font/baby_bb33.woff2") format("woff2"); font-display: swap; }
 
 :root {
 	--w: 1280px ;
   --h: 1280px ;
+	--thumb-nail: 128px;
+	--thumb-margin: 8px;
 
 	--hc-tg-blue: #45537B;
 	--hc-tg-sky: #2D91B7;
@@ -27,12 +20,6 @@
 	--hc-white-xi: #fff;
 	--hc-orange-xvi: orange;
 }
-
-
-
-
-
-
 
 html, body {
   position: relative; 
@@ -50,32 +37,17 @@ body {
   background: #000;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */
-
-  /* font-family: 'Dokdo', system-ui; */
-  /* font-family: 'Gowun Dodum', sans-serif; */
-  /* font-family: 'Black Han Sans', sans-serif; */
 }
 
-body::-webkit-scrollbar {
-  display: none; /* 크롬, 오페라, 사파리 */
-}
+body::-webkit-scrollbar { display: none; } /* 크롬, 오페라, 사파리 */
 
-/* <button */
+/*** Tangram */
+/* button */
 button { width: auto; height: auto; margin: 2px; padding: 0; background: none; border-radius: 6px; pointer-events: fill; }
 button span { position: relative; color: #444; font: 16px 'Black Han Sans', sans-serif; user-select: none; pointer-events: none; }
 button:hover span { color: #fff; pointer-events: none; }
-/* >button */
 
-
-.sheet { /* bgs, fgs, uis... */
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  width: 100%; height: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
+.sheet { /* bgs, fgs, uis... */ position: absolute; display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
 .sheet.uis { pointer-events: none; }
 .sheet.uis .seg.btns, .sheet.uis .seg.btns>div { width: auto; height: auto; }
 
@@ -86,4 +58,4 @@ button:hover span { color: #fff; pointer-events: none; }
 header { position: absolute; width: 100%; height: auto; bottom: 0; color: #dae2; font: 16px 'Gowun Dodum', sans-serif; text-align: left; pointer-events: none; }
 footer { position: absolute; width: 100%; height: auto; bottom: 0; color: #dae2; font: 16px 'Gowun Dodum', sans-serif; text-align: right; pointer-events: none; }
 
-
+/***  */

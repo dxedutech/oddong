@@ -3,568 +3,116 @@
 
 .this { display: flex; justify-content: center; align-items: center; height: 100%; margin: 0; padding: 0; background-color: transparent; }
 
-
-
 html, body { display: flex; width: 100%; height: 100%; margin: 0; padding: 0; background: #222; justify-content: center; align-items: center; overflow: hidden; }
 body>main, article, .sheet { width: var(--w); height: var(--h); }
-/* body>div, article, .sheet { width: 100%; height: 100%; }  */
 article { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
 .so { position: absolute; }
 
-/* iframe body {
-  @font-face { font-family: "PlayTangram"; src: url("../with/fonts/PlayTangram.woff"); }
-  @font-face { font-family: "baby_bb33"; src: url("../with/fonts/baby_bb33.woff"); }
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  flex-wrap: wrap;
-}
-
-@media print {
-  body {
-    @font-face { font-family: "PlayTangram"; src: url("../with/fonts/PlayTangram.woff"); }
-    @font-face { font-family: "baby_bb33"; src: url("../with/fonts/baby_bb33.woff"); }
-    margin: 0; padding: 0;
-  }
-}   */
-
-
-
-
-/* <.sheet.fgs ////////////////////////////////////////////////// */
-/* <.so.tangram */
+/*** .sheet.fgs */
 .sheet.fgs .so.tangram { width: 100%; height: 100%; }
 .sheet.fgs .so.tangram svg g text { user-select: none; }
 
-/* >.so.tangram */
-
-/* <.so.textctrl */
-.sheet.fgs .so.txtctrls {
-	position: absolute;
-	display: none;
-	bottom: 4px;
-	right: 4px;
-}
-
-.sheet.fgs .so.txtctrls.on {
-	display: block;
-	pointer-events: fill;
-}
-
-.sheet.fgs .so.txtctrls>div {
-	padding: 8px;
-	background: #3A343D;
-	border: 1px solid #dae2;
-	border-radius: 6px;
-}
-
-.sheet.fgs .so.txtctrls label {
-	color: #fff;
-	font: 24px "Black Han Sans", sans-serif;
-	margin: 5px;
-}
-
+.sheet.fgs .so.txtctrls { position: absolute; display: none; bottom: 4px; right: 4px; }
+.sheet.fgs .so.txtctrls.on { display: block; pointer-events: fill; }
+.sheet.fgs .so.txtctrls>div { padding: 8px; background: #3A343D; border: 1px solid #dae2; border-radius: 6px; }
+.sheet.fgs .so.txtctrls label { color: #fff; font: 24px "Black Han Sans", sans-serif; margin: 5px; }
 .sheet.fgs .so.txtctrls input,
-.sheet.fgs .so.txtctrls select {
-	color: #444;
-	font: 24px "Gowun Dodum", sans-serif;
-	margin: 5px;
-}
+.sheet.fgs .so.txtctrls select { color: #444; font: 24px "Gowun Dodum", sans-serif; margin: 5px; }
+.sheet.fgs .so.txtctrls select option { color: #444; font: 16px "Gowun Dodum", sans-serif; }
 
-.sheet.fgs .so.txtctrls select option {
-	color: #444;
-	font: 16px "Gowun Dodum", sans-serif;
-}
+.sheet.fgs .so.txtctrls .btns { display: flex; height: 48px; }
+.sheet.fgs .so.txtctrls .btns>div { display: flex; padding: 0 8px; }
+.sheet.fgs .so.txtctrls .btns>div:nth-child(1) { border: 0 solid #dae6; border-width: 0 1px 0 0; }
+.sheet.fgs .so.txtctrls .btns .add { background: no-repeat 0 0 / 100% url( rsc/svg/ico-create.svg); }
+.sheet.fgs .so.txtctrls .btns .remove { background: no-repeat 0 0 / 100% url(rsc/svg/ico-remove.svg); }
+.sheet.fgs .so.txtctrls .btns .edit { background: no-repeat 0 0 / 100% url(rsc/svg/ico-edit.svg); }
+.sheet.fgs .so.txtctrls .btns .fixtxt { background: no-repeat 0 0 / 100% url(rsc/svg/ico-remove.svg); }
+.sheet.fgs .so.txtctrls .btns>div:nth-child(2) .fixtxt { display: none; }
+.sheet.fgs .so.txtctrls .btns>div:nth-child(2) .fixtxt.off { display: block; }
+.sheet.fgs .so.txtctrls .btns>div:nth-child(2) .fixtxt.on { display: block; border: 1px solid #dae; }
+.sheet.fgs .so.txtctrls .btns .btn { width: 40px; height: 40px; border: 1px solid #dae2; }
+.sheet.fgs .so.txtctrls .btns .btn:hover { background-color: #dae6; }
 
-.sheet.fgs .so.txtctrls .btns {
-	display: flex;
-	height: 48px;
-}
-
-.sheet.fgs .so.txtctrls .btns>div {
-	display: flex;
-	padding: 0 8px;
-}
-
-.sheet.fgs .so.txtctrls .btns>div:nth-child(1) {
-	border: 0 solid #dae6;
-	border-width: 0 1px 0 0;
-}
-
-.sheet.fgs .so.txtctrls .btns .add {
-	background: no-repeat 0 0 / 100% url( rsc/svg/ico-create.svg);
-}
-
-.sheet.fgs .so.txtctrls .btns .remove {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-remove.svg);
-}
-
-.sheet.fgs .so.txtctrls .btns .edit {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-edit.svg);
-}
-
-.sheet.fgs .so.txtctrls .btns .fixtxt {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-remove.svg);
-}
-
-.sheet.fgs .so.txtctrls .btns>div:nth-child(2) .fixtxt {
-	display: none;
-}
-
-.sheet.fgs .so.txtctrls .btns>div:nth-child(2) .fixtxt.off {
-	display: block;
-}
-
-.sheet.fgs .so.txtctrls .btns>div:nth-child(2) .fixtxt.on {
-	display: block;
-	border: 1px solid #dae;
-}
-
-.sheet.fgs .so.txtctrls .btns .btn {
-	width: 40px;
-	height: 40px;
-	border: 1px solid #dae2;
-}
-
-.sheet.fgs .so.txtctrls .btns .btn:hover {
-	background-color: #dae6;
-}
-
-.sheet.fgs .so.txtctrls .txt {}
-
-.sheet.fgs .so.txtctrls .txt input {
-	width: 386px;
-}
-
-.sheet.fgs .so.txtctrls .xys {
-	display: flex;
-}
-
-.sheet.fgs .so.txtctrls .font {}
-
-/* >.so.textctrl */
-
-/* <.so.skiaorama */
-.sheet.fgs .so.skiaorama.on {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: #000;
-}
-
-.sheet.fgs .so.skiaorama.invert {
-	background: #fff;
-}
-
-/* >.so.skiaorama */
-/* >.sheet.fgs ////////////////////////////////////////////////// */
+.sheet.fgs .so.txtctrls .txt input { width: 386px; }
+.sheet.fgs .so.txtctrls .xys { display: flex; }
+.sheet.fgs .so.skiaorama.on { position: absolute; width: 100%; height: 100%; background: #000; }
+.sheet.fgs .so.skiaorama.invert { background: #fff; }
 
 
+/*** .sheet.uis .so.btns */
+.sheet.uis .so.gride { pointer-events: none; }
+.sheet.uis .so.btns { left: calc(100% + 8px); top: 50%; }
+.sheet.uis.vertical .so.btns { display: flex; left: 50%; top: calc(100% + 8px); }
+.sheet.uis .so.btns .btn { display: flex; width: 64px; height: 64px; border: 1px solid #dae2; justify-content: left; align-items: center; cursor: pointer; }
+.sheet.uis.vertical .so.btns .btn { justify-content: right; }
+.sheet.uis .so.btns .btn span { display: block; left: calc(100% + 8px); font-size: 0px; white-space: nowrap; }
+.sheet.uis.vertical .so.btns .btn span { left: auto; top: calc(100% + 8px); }
+.sheet.uis .so.btns .btn:hover span { font-size: 24px; }
+.sheet.uis .so.btns .btn.text { background: no-repeat 0 0 / 100% url(rsc/svg/ico-addtxt.svg); }
+.sheet.uis .so.btns .btn.color { background: no-repeat 0 0 / 100% url(rsc/svg/ico-tancolor.svg); }
+.sheet.uis .so.btns .btn.pluse { background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanpluse.svg); }
+.sheet.uis .so.btns .btn.reset { background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanreset.svg); }
+.sheet.uis .so.btns .btn.magnetic { background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanmagnetic.svg); }
+.sheet.uis .so.btns .btn.grid { background: no-repeat 0 0 / 100% url(rsc/svg/ico-tangrid.svg); }
+.sheet.uis .so.btns .btn.printdownload { background: no-repeat 0 0 / 100% url(rsc/svg/ico-tansave.svg); }
+.sheet.uis .so.btns .btn.help { background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanhelp.svg); }
+.sheet.uis .so.btns .btn.home { background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanhome.svg); }
+.sheet.uis .so.btns .btn:hover { background-color: #dae6; }
+.sheet.uis .so.btns .btn.on { border-color: #dae; }
 
-
-/* <.so.uis ////////////////////////////////////////////////// */
-/* <.so.gride */
-.sheet.uis .so.gride {
-	pointer-events: none;
-}
-
-/* >.so.gride */
-
-/* <.so.btns */
-.sheet.uis .so.btns {
-	left: calc(100% + 8px);
-	top: 50%;
-}
-
-.sheet.uis.vertical .so.btns {
-	display: flex;
-	left: 50%;
-	top: calc(100% + 8px);
-}
-
-.sheet.uis .so.btns .btn {
-	display: flex;
-	width: 64px;
-	height: 64px;
-	border: 1px solid #dae2;
-	justify-content: left;
-	align-items: center;
-}
-
-.sheet.uis.vertical .so.btns .btn {
-	justify-content: right;
-}
-
-.sheet.uis .so.btns .btn span {
-	display: block;
-	left: calc(100% + 8px);
-	font-size: 0px;
-	white-space: nowrap;
-}
-
-.sheet.uis.vertical .so.btns .btn span {
-	left: auto;
-	top: calc(100% + 8px);
-}
-
-.sheet.uis .so.btns .btn:hover span {
-	font-size: 24px;
-}
-
-.sheet.uis .so.btns .btn.text {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-addtxt.svg);
-}
-
-.sheet.uis .so.btns .btn.color {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-tancolor.svg);
-}
-
-.sheet.uis .so.btns .btn.pluse {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanpluse.svg);
-}
-
-.sheet.uis .so.btns .btn.reset {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanreset.svg);
-}
-
-.sheet.uis .so.btns .btn.magnetic {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanmagnetic.svg);
-}
-
-.sheet.uis .so.btns .btn.grid {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-tangrid.svg);
-}
-
-.sheet.uis .so.btns .btn.printdownload {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-tansave.svg);
-}
-
-.sheet.uis .so.btns .btn.help {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanhelp.svg);
-}
-
-.sheet.uis .so.btns .btn.home {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanhome.svg);
-}
-
-.sheet.uis .so.btns .btn:hover {
-	background-color: #dae6;
-}
-
-.sheet.uis .so.btns .btn.on {
-	border-color: #dae;
-}
-
-/* >.so.btns */
-
-/* <.so.cards */
-:root {
-	--thumb-nail: 128px;
-	--thumb-margin: 8px;
-}
-
-.sheet.uis .so.cards {
-	left: calc(var(--thumb-nail) * -1 - 32px);
-	top: 0;
-}
-
-.sheet.uis.vertical .so.cards {
-	left: 0px;
-	top: calc(var(--thumb-nail) * -1 - 32px);
-}
-
-.sheet.uis .so.cards .thumbs {
-	width: fit-content;
-	height: calc((var(--thumb-nail) + var(--thumb-margin)) * 8 + (var(--thumb-margin) * 3));
-	overflow-x: hidden;
-	overflow-y: scroll;
-}
-
-.sheet.uis.vertical .so.cards .thumbs {
-	width: calc((var(--thumb-nail) + var(--thumb-margin)) * 8 + (var(--thumb-margin) * 3));
-	height: fit-content;
-	overflow-x: scroll;
-	overflow-y: hidden;
-	white-space: nowrap;
-}
-
-.sheet.uis .so.cards .thumbs::-webkit-scrollbar {
-	width: 4px;
-	height: auto;
-}
-
-.sheet.uis.vertical .so.cards .thumbs::-webkit-scrollbar {
-	width: auto;
-	height: 4px;
-}
-
-.sheet.uis .so.cards .thumbs::-webkit-scrollbar-thumb {
-	background: #dae;
-	border-radius: 0;
-}
-
-.sheet.uis .so.cards .thumbs::-webkit-scrollbar-track {
-	background: #dae8;
-	border-radius: 0;
-}
-
+/*** .sheet.uis .so.cards */
+.sheet.uis .so.cards { left: calc(var(--thumb-nail) * -1 - 32px); top: 0; }
+.sheet.uis.vertical .so.cards { left: 0px; top: calc(var(--thumb-nail) * -1 - 32px); }
+.sheet.uis .so.cards .thumbs { width: fit-content; height: calc((var(--thumb-nail) + var(--thumb-margin)) * 8 + (var(--thumb-margin) * 3)); overflow-x: hidden; overflow-y: scroll; }
+.sheet.uis.vertical .so.cards .thumbs { width: calc((var(--thumb-nail) + var(--thumb-margin)) * 8 + (var(--thumb-margin) * 3)); height: fit-content; overflow-x: scroll; overflow-y: hidden; white-space: nowrap; }
+.sheet.uis .so.cards .thumbs::-webkit-scrollbar { width: 4px; height: auto; }
+.sheet.uis.vertical .so.cards .thumbs::-webkit-scrollbar { width: auto; height: 4px; }
+.sheet.uis .so.cards .thumbs::-webkit-scrollbar-thumb { background: #dae; border-radius: 0; }
+.sheet.uis .so.cards .thumbs::-webkit-scrollbar-track { background: #dae8; border-radius: 0; }
 .sheet.uis .so.cards .thumbs ul,
-.sheet.uis .so.cards .thumbs li {
-	padding: 0;
-	margin: 0;
-}
+.sheet.uis .so.cards .thumbs li { padding: 0; margin: 0; }
+.sheet.uis.vertical .so.cards .thumbs ul { display: flex; width: fit-content; }
+.sheet.uis .so.cards .thumbs li { position: relative; width: var(--thumb-nail); height: var(--thumb-nail); margin: var(--thumb-margin); list-style: none; border: 1px solid #dae6; color: #888; pointer-events: fill; }
+.sheet.uis .so.cards .thumbs li.on { background: #dae6; }
+.sheet.uis .so.cards .thumbs li>div { font: 14px "Black Han Sans", sans-serif; pointer-events: none; user-select: none; }
+.sheet.uis .so.cards .thumbs li .sec { position: absolute; right: 0; width: 16px; height: 16px; background: #dae; color: #000; font-size: 14px; line-height: 14px; text-align: center; border-radius: 8px 0 8px 8px; }
+.sheet.uis .so.cards .thumbs li .thumb { position: absolute; display: flex; width: 100%; height: 100%; color: #fff; font-size: 16px; font-weight: bold; justify-content: center; align-items: center; }
 
-.sheet.uis.vertical .so.cards .thumbs ul {
-	display: flex;
-	width: fit-content;
-}
-
-.sheet.uis .so.cards .thumbs li {
-	position: relative;
-	width: var(--thumb-nail);
-	height: var(--thumb-nail);
-	margin: var(--thumb-margin);
-	list-style: none;
-	border: 1px solid #dae6;
-	color: #888;
-	pointer-events: fill;
-}
-
-.sheet.uis .so.cards .thumbs li.on {
-	background: #dae6;
-}
-
-.sheet.uis .so.cards .thumbs li>div {
-	font: 14px "Black Han Sans", sans-serif;
-	pointer-events: none;
-	user-select: none;
-}
-
-.sheet.uis .so.cards .thumbs li .sec {
-	position: absolute;
-	right: 0;
-	width: 16px;
-	height: 16px;
-	background: #dae;
-	color: #000;
-	font-size: 14px;
-	line-height: 14px;
-	text-align: center;
-	border-radius: 8px 0 8px 8px;
-}
-
-.sheet.uis .so.cards .thumbs li .thumb {
-	position: absolute;
-	display: flex;
-	width: 100%;
-	height: 100%;
-	color: #fff;
-	font-size: 16px;
-	font-weight: bold;
-	justify-content: center;
-	align-items: center;
-}
-
-.sheet.uis .so.cards .btns {
-	position: absolute;
-	display: block;
-	width: calc(var(--thumb-nail) * 0.5);
-	height: fit-content;
-	left: calc(var(--thumb-nail) * -0.5 - 8px);
-	top: 0;
-}
-
-.sheet.uis.vertical .so.cards .btns {
-	display: flex;
-	width: fit-content;
-	height: calc(var(--thumb-nail) * 0.5);
-	left: 0;
-	top: calc(var(--thumb-nail) * -0.5 - 8px);
-}
-
-.sheet.uis .so.cards .btns .btn {
-	display: flex;
-	width: calc(var(--thumb-nail) * 0.5);
-	height: calc(var(--thumb-nail) * 0.5);
-	border: 1px solid #dae2;
-	justify-content: right;
-	align-items: center;
-}
-
-.sheet.uis.vertical .so.cards .btns .btn {
-	justify-content: left;
-}
-
-.sheet.uis .so.cards .btns .btn span {
-	display: block;
-	left: calc(-100% - 8px);
-	font-size: 0px;
-	white-space: nowrap;
-}
-
-.sheet.uis.vertical .so.cards .btns .btn span {
-	left: auto;
-	top: -100%;
-}
-
-.sheet.uis .so.cards .btns .btn:hover span {
-	font-size: 24px;
-}
-
-.sheet.uis .so.cards .btns .btn.moveprev {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-moveprev.svg);
-}
-
-.sheet.uis .so.cards .btns .btn.movenext {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-movenext.svg);
-}
-
-.sheet.uis .so.cards .btns .btn.addprev {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-addprev.svg);
-}
-
-.sheet.uis .so.cards .btns .btn.addnext {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-addnext.svg);
-}
-
-.sheet.uis .so.cards .btns .btn.remove {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-remove.svg);
-}
-
-.sheet.uis .so.cards .btns .btn.draw {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-draw.svg);
-}
-
-.sheet.uis .so.cards .btns .btn.laydown {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-laydown.svg);
-}
-
-.sheet.uis .so.cards .btns .btn.playonce {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-playonce.svg);
-}
-
-.sheet.uis .so.cards .btns .btn.playstop {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-playstop.svg);
-}
-
-.sheet.uis .so.cards .btns .btn.playloop {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-playloop.svg);
-}
-
-.sheet.uis .so.cards .btns .btn.import {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-import.svg);
-}
-
-.sheet.uis .so.cards .btns .btn.export {
-	background: no-repeat 0 0 / 100% url(rsc/svg/ico-export.svg);
-}
-
-.sheet.uis .so.cards .btns .btn:hover {
-	background-color: #dae6;
-}
-
-.sheet.uis .so.cards .btns .btn.on {
-	background-color: #dae6;
-}
-
-.sheet.uis .so.cards textarea {
-	position: absolute;
-	width: 240px;
-	height: 18px;
-	left: 158px;
-	top: 8px;
-	margin: 2px 0 0 4px;
-	padding: 4px;
-	background: #dae6;
-	color: #ddd;
-	font: 24px "Gowun Dodum", sans-serif;
-	line-height: 18px;
-	border-radius: 6px;
-	border: 1px solid #dae;
-	resize: none;
-	pointer-events: fill;
-	white-space: nowrap;
-	overflow: hidden
-}
-
-.sheet.uis.vertical .so.cards textarea {
-	left: 0px;
-	top: 168px;
-}
-
-.sheet.uis .so.cards textarea:focus {
-	outline: none;
-}
-
-/* >.so.cards */
+.sheet.uis .so.cards .btns { position: absolute; display: block; width: calc(var(--thumb-nail) * 0.5); height: fit-content; left: calc(var(--thumb-nail) * -0.5 - 8px); top: 0; }
+.sheet.uis.vertical .so.cards .btns { display: flex; width: fit-content; height: calc(var(--thumb-nail) * 0.5); left: 0; top: calc(var(--thumb-nail) * -0.5 - 8px); }
+.sheet.uis .so.cards .btns .btn { display: flex; width: calc(var(--thumb-nail) * 0.5); height: calc(var(--thumb-nail) * 0.5); border: 1px solid #dae2; justify-content: right; align-items: center; cursor: pointer; }
+.sheet.uis.vertical .so.cards .btns .btn { justify-content: left; }
+.sheet.uis .so.cards .btns .btn span { display: block; left: calc(-100% - 8px); font-size: 0px; white-space: nowrap; }
+.sheet.uis.vertical .so.cards .btns .btn span { left: auto; top: -100%; }
+.sheet.uis .so.cards .btns .btn:hover span { font-size: 24px; }
+.sheet.uis .so.cards .btns .btn.moveprev { background: no-repeat 0 0 / 100% url(rsc/svg/ico-moveprev.svg); }
+.sheet.uis .so.cards .btns .btn.movenext { background: no-repeat 0 0 / 100% url(rsc/svg/ico-movenext.svg); }
+.sheet.uis .so.cards .btns .btn.addprev { background: no-repeat 0 0 / 100% url(rsc/svg/ico-addprev.svg); }
+.sheet.uis .so.cards .btns .btn.addnext { background: no-repeat 0 0 / 100% url(rsc/svg/ico-addnext.svg); }
+.sheet.uis .so.cards .btns .btn.remove { background: no-repeat 0 0 / 100% url(rsc/svg/ico-remove.svg); }
+.sheet.uis .so.cards .btns .btn.draw { background: no-repeat 0 0 / 100% url(rsc/svg/ico-draw.svg); }
+.sheet.uis .so.cards .btns .btn.laydown { background: no-repeat 0 0 / 100% url(rsc/svg/ico-laydown.svg); }
+.sheet.uis .so.cards .btns .btn.playonce { background: no-repeat 0 0 / 100% url(rsc/svg/ico-playonce.svg); }
+.sheet.uis .so.cards .btns .btn.playstop { background: no-repeat 0 0 / 100% url(rsc/svg/ico-playstop.svg); }
+.sheet.uis .so.cards .btns .btn.playloop { background: no-repeat 0 0 / 100% url(rsc/svg/ico-playloop.svg); }
+.sheet.uis .so.cards .btns .btn.import { background: no-repeat 0 0 / 100% url(rsc/svg/ico-import.svg); }
+.sheet.uis .so.cards .btns .btn.export { background: no-repeat 0 0 / 100% url(rsc/svg/ico-export.svg); }
+.sheet.uis .so.cards .btns .btn:hover { background-color: #dae6; }
+.sheet.uis .so.cards .btns .btn.on { background-color: #dae6; }
+.sheet.uis .so.cards textarea { position: absolute; width: 240px; height: 18px; left: 158px; top: 8px; margin: 2px 0 0 4px; padding: 4px; background: #dae6; color: #ddd; font: 24px "Gowun Dodum", sans-serif; line-height: 18px; border-radius: 6px; border: 1px solid #dae; resize: none; pointer-events: fill; white-space: nowrap; overflow: hidden }
+.sheet.uis.vertical .so.cards textarea { left: 0px; top: 168px; }
+.sheet.uis .so.cards textarea:focus { outline: none; }
 
 
-/* <.so.modal */
-.sheet.uis .so.modal.on {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-}
-
-.sheet.uis .so.modal.on .msgs {
-	width: 100%;
-	height: 100%;
-	background: #fff;
-	pointer-events: fill;
-}
-
-.sheet.uis .so.modal .btns {
-	display: none;
-}
-
-.sheet.uis .so.modal.on .btns {
-	position: absolute;
-	display: inline-flex;
-	right: 24px;
-	bottom: 24px;
-}
-
-.sheet.uis .so.modal.on .btns .btn {
-	padding: 4px 24px;
-	background: #dae6;
-	border: none;
-}
-
-.sheet.uis .so.modal.on .btns .btn span {
-	color: #dae;
-	font: 16px "Black Han Sans", sans-serif;
-}
-
-.sheet.uis .so.modal.on .btns .btn:hover span {
-	color: #fff;
-}
-
-.sheet.uis .so.modal.on .btns textarea {
-	width: 240px;
-	height: 18px;
-	margin: 2px 0 0 4px;
-	padding: 4px;
-	background: #dae6;
-	color: #666;
-	font: 24px "Gowun Dodum", sans-serif;
-	line-height: 18px;
-	border-radius: 6px;
-	border: 1px solid #dae;
-	resize: none;
-	pointer-events: fill;
-	white-space: nowrap;
-	overflow: hidden
-}
-
-.sheet.uis .so.modal.on .btns textarea:focus {
-	outline: none;
-}
-
-/* >.so.modal */
-/* >.so.uis ////////////////////////////////////////////////// */
-
-
-
+/*** .sheet.uis .so.modal */
+.sheet.uis .so.modal.on { position: absolute; width: 100%; height: 100%; }
+.sheet.uis .so.modal.on .msgs { width: 100%; height: 100%; background: #fff; pointer-events: fill; }
+.sheet.uis .so.modal .btns { display: none; }
+.sheet.uis .so.modal.on .btns { position: absolute; display: inline-flex; right: 24px; bottom: 24px; }
+.sheet.uis .so.modal.on .btns .btn { padding: 4px 24px; background: #dae6; border: none; }
+.sheet.uis .so.modal.on .btns .btn span { color: #dae; font: 16px "Black Han Sans", sans-serif; }
+.sheet.uis .so.modal.on .btns .btn:hover span { color: #fff; }
+.sheet.uis .so.modal.on .btns textarea { width: 240px; height: 18px; margin: 2px 0 0 4px; padding: 4px; background: #dae6; color: #666; font: 24px "Gowun Dodum", sans-serif; line-height: 18px; border-radius: 6px; border: 1px solid #dae; resize: none; pointer-events: fill; white-space: nowrap; overflow: hidden }
+.sheet.uis .so.modal.on .btns textarea:focus { outline: none; }
 

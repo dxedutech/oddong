@@ -79,7 +79,7 @@ const parsexmlu = (v) => {
 	return t ? v.e : v.d;
 };
 
-/* <.so.txtctrls /// */
+/*** .so.txtctrls */
 const txtctrl = {
 	addu: (v) => {
 		const { e, o, w } = v;
@@ -209,9 +209,8 @@ const txtctrl = {
 		}
 	},
 };
-/* >.so.txtctrls /// */
 
-/* <.so.btns /// */
+/*** .so.btns */
 const btnstangram = {
 	textu: (v) => {
 		const { e, o, w } = v;
@@ -292,11 +291,7 @@ const btnstangram = {
 			}
 		});
 
-		v.l =
-			document.querySelector('.sheet.fgs .so.tangram .tans.xi').style
-				.display === 'none'
-				? 7
-				: 14;
+		v.l = document.querySelector('.sheet.fgs .so.tangram .tans.xi').style .display === 'none' ? 7 : 14;
 		for (let i = 0; i < v.l; i++) {
 			v.a.push([]);
 			[].forEach.call(v.a[i + 1], (k) => {
@@ -422,11 +417,9 @@ const btnstangram = {
 		URL.revokeObjectURL(v.l.href);
 	},
 };
-/* >.so.btns /// */
 
-// /* <.so.cards /// */
+/*** .so.cards */
 const thumbscard = { time: 0, thumb: [] };
-
 const cardu = (v) => {
 	const { x, t, b, w } = v;
 
@@ -440,7 +433,7 @@ const cardu = (v) => {
 		v.r = e.getBoundingClientRect();
 
 		if (w.hv.h) {
-			///vertical
+			/// vertical
 			if (v.r.top < v.f.top) {
 				t.scrollTop -= (v.f.top + 8 - v.r.top) / w.r; /// margin: 8px;
 			} else if (v.r.bottom > v.f.bottom) {
@@ -655,43 +648,14 @@ const cardu = (v) => {
 
 			v.r.readAsText(v.f);
 			
-			e.target.value = ''; // 동일한 파일을 다시 선택할 수 있도록 값 초기화
+			e.target.value = ''; /// 동일한 파일을 다시 선택할 수 있도록 값 초기화
 		}
 	});
 	
-	// document.querySelector('.so.cards .fileimport').addEventListener('change', (e) => {
-	// 	v.f = e.target.files[0];
-	// 	if (v.f) {
-	// 		v.r = new FileReader();
-
-	// 		v.r.onload = function (e) {
-	// 			v.s = e.target.result;
-	// 			v.t = parsexmlu({ s: v.s, t: 'li' });
-
-	// 			[].forEach.call(v.t, (e) => {
-	// 				v.h = e.querySelector('.thumb').innerHTML;
-	// 				if (v.h.match(/<svg/)) {
-	// 					btnscard.addnextu({
-	// 						e: document.querySelector('.so.cards .thumbs .on'),
-	// 					});
-	// 					v.e = document.querySelector('.so.cards .thumbs .on');
-	// 					v.h = e.querySelector('.thumb').innerHTML;
-	// 					v.e.querySelector('.thumb').innerHTML =
-	// 						e.querySelector('.thumb').innerHTML;
-	// 				}
-	// 			});
-	// 		};
-
-	// 		v.r.readAsText(v.f);
-	// 	}
-	// 	e.target.value = ''; // 동일한 파일을 다시 선택할 수 있도록 값 초기화
-	// });
-
 	return btnscard;
 };
-/* >.so.cards /// */
 
-/* <.so.tangram, .so.gride, .so.btns /// */
+/*** .so.tangram, .so.gride, .so.btns */
 ((v) => {
 	const { x, a, o, i, w } = v;
 
@@ -699,9 +663,9 @@ const cardu = (v) => {
 		// await x.loadfontu('/www/with/fonts/baby_bb33.woff');
 		// await x.loadfontu('/www/with/fonts/PlayTangram.woff');
 
-		await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` }); /// module, index
-		x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
-
+		await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
+		// x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
+		x.envm.resizeu({ w: x.envm.wh.w, h: x.envm.wh.h });
 		// await x.loadFetch({ u: '/www/work/tangram/tangram.xml', p: '.sheet.bgs' });
 
 		// w.r = x.envm.r;
@@ -785,7 +749,7 @@ const cardu = (v) => {
 			},
 		};
 
-		/* .so.cards /// */
+		/*** .so.cards */
 		const btnscard = cardu({
 			x: x,
 			t: document.querySelector('.sheet.uis .so.cards .thumbs'),
@@ -847,11 +811,11 @@ const cardu = (v) => {
 						delete x.btnm.evt.e;
 					}
 				}
-				// [`${v.s}u`]({e: v.e});
+				/// [`${v.s}u`]({e: v.e});
 			}
 
 			if (thumbscard.time > 0) {
-				///stop or loop, play
+				/// stop or loop, play
 				v.l = thumbscard.thumb.length;
 				if (v.l) {
 					v.c = thumbscard.thumb[thumbscard.current];
@@ -914,9 +878,9 @@ const cardu = (v) => {
 			v.d = e.getAttribute('d');
 			v.f = e.getAttribute('fill');
 
-			v.xy = { sx: 0, sy: 0, cx: 0, cy: 0, dx: 0, dy: 0, }; /* position: start, current, delta */
-			v.t = { s: 0, c: 0 }; /* time: start, current */
-			v.is = { d: false, m: false, r: false, }; /* is: Dragging, Moving, Rotating */
+			v.xy = { sx: 0, sy: 0, cx: 0, cy: 0, dx: 0, dy: 0, }; /// position: start, current, delta
+			v.t = { s: 0, c: 0 }; /// time: start, current
+			v.is = { d: false, m: false, r: false, }; /// is: Dragging, Moving, Rotating
 			v.i = `.${e.classList.value.replace(/\s/, '.')}`;
 			v.r = pathparseu({ d: v.d });
 
@@ -932,7 +896,7 @@ const cardu = (v) => {
 		document.addEventListener('mouseup', drag.endu);
 		document.addEventListener('touchend', drag.endu);
 
-		await x.importmoduleu({ m: `${dx.basePath}/wore/btn.js` }); /// module, index
+		await x.importmoduleu({ m: `${dx.basePath}/wore/btn.js` });
 
 		v.e = document.querySelector('.sheet.fgs .so.tangram .tans.xi');
 		v.e.style.display = 'none';
@@ -946,4 +910,3 @@ const cardu = (v) => {
 		});
 	})();
 })({ x: dx.hex, a: document.querySelectorAll('.tan'), o: {}, i: {}, w: { r: 1, wh: { w: 1280, h: 1280 } }, });
-/* >.so.tangram, .so.gride, .so.btns /// */

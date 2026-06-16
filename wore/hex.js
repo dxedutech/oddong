@@ -41,31 +41,26 @@ const hex = (e) => {
 	const a = e === undefined ? [] : typeof e === 'string' ? document.querySelectorAll(e) : Array.isArray(e) ? e : [e];
 	const r = {};
 
-	/* <store user> */
+	/*** store user */
 	const me = { email: '', key: '', };
-	/* </store user> */
 
-	/* <store color values> */
+	/*** store color values */
 	const clra = { r: '#dae', g: '#aed', y: '#eda', };
 	[].forEach.call(Object.keys(clra), (k) => (r[k] = clra[k]));
-	/* </Store color values> */
 
-	/* <Add, Remove classes to elements> */
+	/*** Add, Remove classes to elements */
 	r.addclassu = (v) => [].forEach.call(a, (e) => (e ? e.classList.add(v) : void 0));
 	r.removeclassu = (v) => [].forEach.call(a, (e) => (e ? e.classList.remove(v) : void 0));
-	/* </Add, Remove classes to elements> */
 
-	/* <Apply styles to elements> */
-	r.cssu = (v) =>
-		[].forEach.call(a, (e) => e ? [].forEach.call(Object.keys(v), (k) => v.hasOwnProperty(k) ? (e.style[k] = v[k]) : void 0, ) : void 0);
-	/* </Apply styles to elements> */
+	/*** Apply styles to elements */
+	r.cssu = (v) => [].forEach.call(a, (e) => e ? [].forEach.call(Object.keys(v), (k) => v.hasOwnProperty(k) ? (e.style[k] = v[k]) : void 0, ) : void 0);
 
 	return r;
 };
 
 hex.devu = () => '//\\v0.0.240903';
 
-/* <parse json > */
+/*** parse json  */
 hex.parseattu = (v) => JSON.parse(`{ ${v.e.attributes['js'].value.replace(/'/g, '"')} }`);
 hex.parsecssu = (v) => {
 	const { e, s } = v;
@@ -73,9 +68,8 @@ hex.parsecssu = (v) => {
 	v.j = JSON.parse(`{ ${s.replace(/'/g, '"')} }`);
 	[].forEach.call(Object.keys(v.j), (k) => (e.style[k] = v.j[k]));
 };
-/* </parse js > */
 
-/* <create an element with a Element> */
+/*** create an element with a Element */
 hex.crtu = (v) => {
 	const { t, c, e, p } = v; /// tag, class, element, parent
 
@@ -90,9 +84,8 @@ hex.crtu = (v) => {
 
 	return v.e;
 };
-/* </create an element with a Element> */
 
-/* <create an element with a Class> */
+/*** create an element with a Class */
 hex.attu = (v) => {
 	const { t, c, e, p } = v; /// tag, class, element, parent
 
@@ -120,9 +113,8 @@ hex.attu = (v) => {
 
 	return e;
 };
-/* </create an element with a Class> */
 
-/* <import the Module.> */
+/*** import the Module. */
 hex.importmoduleu = async (v) => {
 	const { m, i } = v; /// module, index
 
@@ -137,9 +129,8 @@ hex.importmoduleu = async (v) => {
 		console.log('There was a problem with the import operation:', e);
 	}
 };
-/* </import the Module.> */
 
-/* <load FONT> */
+/*** load FONT */
 hex.loadfontu = async (v) => {
 	try {
 		const s = v.match(/([^\/]+)\.[^\.]+$/)[1];
@@ -152,9 +143,8 @@ hex.loadfontu = async (v) => {
 		console.log('Failed to load font:', e);
 	}
 };
-/* <load FONT> */
 
-/* <parsing XML> */
+/*** parsing XML */
 hex.xml = {};
 hex.xml.svgu = (v) => {
 	const { e, c, p } = v;
@@ -208,9 +198,8 @@ hex.parsexmlu = (v) => {
 
 	[].forEach.call(e.querySelectorAll('prop'), (e) => hex.xml[`${e.getAttribute('x')}u`]({ e: e, c: c, p: p }), );
 };
-/* </parsing XML> */
 
-/* <asynchronously loads an HTML, XML or SVG file> */
+/*** asynchronously loads an HTML, XML or SVG file */
 hex.htmlu = (v) => (v.p.innerHTML = v.e);
 hex.svgu = (v) => (v.p.innerHTML = v.e);
 hex.xmlu = (v) => {
@@ -236,9 +225,8 @@ hex.loadFetch = async (v) => {
 			console.error('There was a problem with the fetch operation:', e),
 		);
 };
-/* </asynchronously loads an HTML, XML or SVG file> */
 
-/* <load a CSS> */
+/*** load a CSS */
 hex.loadcssu = (v) => {
 	const link = document.createElement('link');
 	link.rel = 'stylesheet';
@@ -247,9 +235,8 @@ hex.loadcssu = (v) => {
 
 	document.head.appendChild(link);
 };
-/* </load a CSS> */
 
-/* <load a Page> */
+/*** load a Page */
 hex.loadpageu = async (v) => {
 	const { u } = v;
 
@@ -257,21 +244,19 @@ hex.loadpageu = async (v) => {
 		v.r = await fetch(`${u}`); /// /work/tangram
 		v.d = await v.r.json();
 
-		// 받은 데이터를 화면에 표시
-		// document.getElementById('message').innerText = v.d.message;
+		/// 받은 데이터를 화면에 표시
+		/// document.getElementById('message').innerText = v.d.message;
 		console.log(v.d.message);
 	} catch (error) {
 		console.error('Error fetching data:', error);
 	}
 };
-/* </load a Page> */
 
-/* <location a Page> */
+/*** location a Page */
 hex.location = {
 	href: (v) => (location.href = v.u),
 	replace: (v) => location.replace(v.u),
 	open: (v) => window.open(v.u),
 };
-/* </location a Page> */
 
 export const dx = { hex, loadPage, basePath };
