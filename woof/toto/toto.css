@@ -20,9 +20,12 @@ article { display: flex; flex-direction: column; width: 100%; height: 100%; just
 .sheet.uis .so.btns { position: absolute; left: calc(100% + 8px); top: 50%; }
 .sheet.uis.vertical .so.btns { display: flex; left: 50%; top: calc(100% + 8px); }
 
-.sheet.uis .btn { display: flex; width: 64px; height: 64px; margin-top: 8px; border: 1px solid #dae2; justify-content: left; align-items: center; cursor: pointer; }
-.sheet.uis .btn span { display: block; left: calc(100% + 8px); font-size: 0px; white-space: nowrap; }
-.sheet.uis .btn:hover span { font-size: 24px; }
+.sheet.uis .so.btns .btn { display: flex; width: 64px; height: 64px; border: 1px solid #dae2; justify-content: left; align-items: center; cursor: pointer; }
+.sheet.uis.vertical .so.btns .btn { justify-content: right; }
+.sheet.uis .so.btns .btn span { display: block; left: calc(100% + 8px); font-size: 0px; white-space: nowrap; }
+.sheet.uis.vertical .so.btns .btn span { left: auto; top: calc(100% + 8px); }
+
+.sheet.uis .so.btns .btn:hover span { font-size: 24px; }
 
 .sheet.uis .btn.play { background: no-repeat 0 0 / 100% url(rsc/svg/ico-playonce.svg); }
 .sheet.uis .btn.home { background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanhome.svg); }
