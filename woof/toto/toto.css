@@ -13,7 +13,7 @@ article { display: flex; flex-direction: column; width: 100%; height: 100%; just
 .sheet.fgs>div div::before { content: ""; position: absolute; margin-bottom: 58px; width: 40px; height: 6px; border: 2px solid var(--hc-tg-lotto); border-bottom: none; }
 .sheet.fgs>div div::after { content: ""; position: absolute; margin-top: 58px; width: 40px; height: 6px; border: 2px solid var(--hc-tg-lotto); border-top: none; }
 
-.sheet.fgs>div div p { width: 100%; height: 52px; border-radius: 50%; font-size: 34px; font-weight: bold; color: var(--hc-tg-lotto); text-align: center; user-select: none; }
+.sheet.fgs>div div p { width: 100%; height: 52px; border-radius: 18px; font-size: 34px; font-weight: bold; color: var(--hc-tg-lotto); text-align: center; user-select: none; }
 .sheet.fgs>div div.on p { background-color: #444; }
 
 /*** .sheet.uis */

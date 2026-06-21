@@ -21,18 +21,19 @@ cx.clearRect(0, 0, cs.width, cs.height);
 
 const loy = {};
 loy.lcm = { l: 1, c: 1, m: 45 }; /* least(minimum), current, most(maximum) */
-loy.now = { d: '', t: '', n: '' };
+loy.now = { d: '', r: 0, s: 0, n: '' }; /// day, recent, start, numbers
 loy.weeks = 24; /// 4*2, 4*3, 4*4, 4*5, 4*6 다섯번의 범위 변경 
 loy.run = [];
-loy.nda = [
-	'24 29 30 31 35 44', '1 14 16 34 41 44', '4 6 13 17 26 28', '8 9 19 25 41 42',
-	'9 18 21 27 44 45', '16 18 20 32 33 39', '4 11 17 22 32 41', '6 13 18 28 30 36',
-	'2 22 25 28 34 43', '1 2 15 28 39 45', '3 28 31 32 42 45', '8 10 15 20 29 31',
-	'10 15 19 27 30 33', '5 11 25 27 36 38', '5 8 25 31 41 44', '23 26 27 35 38 40',
-	'1 7 9 17 27 38', '2 17 20 35 37 39', '6 27 30 36 38 42', '10 22 24 27 38 45',
-	'1 3 17 26 27 42', '1 4 16 23 31 41', '8 16 28 30 31 44', '3 6 18 29 35 39',
-	'5 12 21 33 37 40', '7 9 24 27 35 36', '1 2 4 16 20 32', '16 24 25 30 31 32'
-]; /* numbers drawn */
+loy.nda = [];
+// loy.nda = [
+// 	'24 29 30 31 35 44', '1 14 16 34 41 44', '4 6 13 17 26 28', '8 9 19 25 41 42',
+// 	'9 18 21 27 44 45', '16 18 20 32 33 39', '4 11 17 22 32 41', '6 13 18 28 30 36',
+// 	'2 22 25 28 34 43', '1 2 15 28 39 45', '3 28 31 32 42 45', '8 10 15 20 29 31',
+// 	'10 15 19 27 30 33', '5 11 25 27 36 38', '5 8 25 31 41 44', '23 26 27 35 38 40',
+// 	'1 7 9 17 27 38', '2 17 20 35 37 39', '6 27 30 36 38 42', '10 22 24 27 38 45',
+// 	'1 3 17 26 27 42', '1 4 16 23 31 41', '8 16 28 30 31 44', '3 6 18 29 35 39',
+// 	'5 12 21 33 37 40', '7 9 24 27 35 36', '1 2 4 16 20 32', '16 24 25 30 31 32'
+// ]; /* numbers drawn */
 
 loy.cnt = [];
 loy.wins = [];
@@ -73,8 +74,8 @@ loy.shuffleu = (v) => {
 	}
 
 	/// numbers drawn
-	loy.run.forEach((e) => {
-		e.split(' ').forEach((e) => {
+	Array.from(loy.run).forEach((e) => {
+		Array.from(e.split(' ')).forEach((e) => {
 			loy.balls.push(
 				new loy.ball({
 					i: e,
@@ -85,7 +86,7 @@ loy.shuffleu = (v) => {
 		});
 	});
 	loy.run.splice(loy.weeks);
-	
+
 	loy.setu = (v) => {
 		const { l, m } = v; /// least, most
 
@@ -100,12 +101,12 @@ loy.shuffleu = (v) => {
 		}
 	};
 
-	loy.balls.forEach((e) => {
+	Array.from(loy.balls).forEach((e) => {
 		const n = loy.setu({ l: 0.0, m: 1.0 }) - 1;
 		loy.cnt[n]++;
 	});
 
-	loy.wins.forEach((e, i) => {
+	Array.from(loy.wins).forEach((e, i) => {
 		const max = Math.max(...loy.cnt);
 		const maxIndex = loy.cnt.indexOf(max);
 		loy.wins[i] = maxIndex + 1;
@@ -130,7 +131,7 @@ loy.shuffleu = (v) => {
 	loy.weeks = loy.weeks - 4; // 24, 20, 16, 12, 8
 	if (loy.weeks < 8) {
 		loy.weeks = 24;
-		loy.run = loy.nda.splice(loy.weeks);
+		loy.run = [...loy.nda];
 	}
 };
 
@@ -148,16 +149,30 @@ loy.shuffleu = (v) => {
 			v.d = v.j.data.list[0];
 
 			loy.now.d = v.d.ltRflYmd;
-			loy.now.t = v.d.ltEpsd;
-			loy.now.n = `${v.d.tm1WnNo} ${v.d.tm2WnNo} ${v.d.tm3WnNo} ${v.d.tm4WnNo} ${v.d.tm5WnNo} ${v.d.tm6WnNo}`;
+			loy.now.r = parseInt(v.d.ltEpsd);
+			loy.now.s = loy.now.r - loy.weeks;
+			// loy.now.n = `${v.d.tm1WnNo} ${v.d.tm2WnNo} ${v.d.tm3WnNo} ${v.d.tm4WnNo} ${v.d.tm5WnNo} ${v.d.tm6WnNo}`;
 
-			if (loy.nda[0].replace(/\s/g, '') !== loy.now.n.replace(/\s/g, '')) loy.nda.unshift(loy.now.n);
-			if (loy.nda.length > loy.weeks) loy.run = loy.nda.splice(loy.weeks); 
+			// if (loy.nda[0].replace(/\s/g, '') !== loy.now.n.replace(/\s/g, '')) loy.nda.unshift(loy.now.n);
+			// if (loy.nda.length > loy.weeks) loy.run = loy.nda.splice(loy.weeks); 
 
+		} catch (err) {
+			console.error("API 요청 오류:", err);
+			return;
+		}
+
+		try {
+			v.res = await fetch(`${v.url}?srchStrLtEpsd=${loy.now.s}&srchEndLtEpsd=${loy.now.r}`);
+			v.j = await v.res.json();
+			// v.d = v.j.data.list;
+
+			loy.nda = v.j.data.list.map(e => `${e.tm1WnNo} ${e.tm2WnNo} ${e.tm3WnNo} ${e.tm4WnNo} ${e.tm5WnNo} ${e.tm6WnNo}`);
+			loy.run = [...loy.nda]; 
 			loy.mainu({});
 		} catch (err) {
 			console.error("API 요청 오류:", err);
 		}
+
 	})({});
 
 
