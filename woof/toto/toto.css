@@ -1,4 +1,4 @@
-.fpt { font-family: 'PlayTangram', sans-serif; color: #ffffff; }
+.fpt { font-family: 'PlayTangram', sans-serif; color: #fff; }
 .fbb { font-family: 'baby_bb33', sans-serif; }
 
 .this { display: flex; justify-content: center; align-items: center; height: 100%; margin: 0; padding: 0; background-color: transparent; }
@@ -7,9 +7,20 @@ html, body { display: flex; width: 100%; height: 100%; margin: 0; padding: 0; ba
 body>main, article, .sheet { width: var(--w); height: var(--h); }
 article { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
 
+/** .sheet.fgs */
+.sheet.fgs>div { width: 420px; display: flex; flex-wrap: wrap; background-color: #fff; }
+.sheet.fgs>div div { display: flex; width: 40px; height: 64px; margin: 24px 10px; justify-content: center; align-items: center; }
+.sheet.fgs>div div::before { content: ""; position: absolute; margin-bottom: 58px; width: 40px; height: 6px; border: 2px solid var(--hc-tg-lotto); border-bottom: none; }
+.sheet.fgs>div div::after { content: ""; position: absolute; margin-top: 58px; width: 40px; height: 6px; border: 2px solid var(--hc-tg-lotto); border-top: none; }
 
-.so.btns { position: absolute; left: calc(100% + 8px); top: 50%; }
-.btn { display: flex; width: 64px; height: 64px; border: 1px solid #dae2; justify-content: left; align-items: center; cursor: pointer; }
-.btn span { display: block; left: calc(100% + 8px); font-size: 0px; white-space: nowrap; }
-.btn:hover span { font-size: 24px; }
-.btn.home { background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanhome.svg); }
+.sheet.fgs>div div p { width: 100%; height: 52px; border-radius: 50%; font-size: 34px; font-weight: bold; color: var(--hc-tg-lotto); text-align: center; user-select: none; }
+.sheet.fgs>div div.on p { background-color: #444; }
+
+/*** .sheet.uis */
+.sheet.uis .so.btns { position: absolute; left: calc(100% + 8px); top: 50%; }
+.sheet.uis .btn { display: flex; width: 64px; height: 64px; margin-top: 8px; border: 1px solid #dae2; justify-content: left; align-items: center; cursor: pointer; }
+.sheet.uis .btn span { display: block; left: calc(100% + 8px); font-size: 0px; white-space: nowrap; }
+.sheet.uis .btn:hover span { font-size: 24px; }
+
+.sheet.uis .btn.play { background: no-repeat 0 0 / 100% url(rsc/svg/ico-playonce.svg); }
+.sheet.uis .btn.home { background: no-repeat 0 0 / 100% url(rsc/svg/ico-tanhome.svg); }

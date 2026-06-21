@@ -15,27 +15,25 @@ cx.textBaseline = 'ideographic';
 cx.maxWidth = cs.width;
 cx.height = cs.height;
 
-cx.fillStyle = 'transparent';
-cx.fillStyle = '#000';
-cx.fillRect(0, 0, cs.width, cs.height);
+// cx.fillStyle = 'transparent';
+// cx.fillRect(0, 0, cs.width, cs.height);
+cx.clearRect(0, 0, cs.width, cs.height);
 
 const loy = {};
-// loy.fu = 'loadu';
-loy.fu = 'mainu';
 loy.lcm = { l: 1, c: 1, m: 45 }; /* least(minimum), current, most(maximum) */
-loy.nda = ['24 29 30 31 35 44', '1 14 16 34 41 44', '4 6 13 17 26 28', '8 9 19 25 41 42',
+loy.now = { d: '', t: '', n: '' };
+loy.weeks = 24; /// 4*2, 4*3, 4*4, 4*5, 4*6 다섯번의 범위 변경 
+loy.run = [];
+loy.nda = [
+	'24 29 30 31 35 44', '1 14 16 34 41 44', '4 6 13 17 26 28', '8 9 19 25 41 42',
 	'9 18 21 27 44 45', '16 18 20 32 33 39', '4 11 17 22 32 41', '6 13 18 28 30 36',
 	'2 22 25 28 34 43', '1 2 15 28 39 45', '3 28 31 32 42 45', '8 10 15 20 29 31',
 	'10 15 19 27 30 33', '5 11 25 27 36 38', '5 8 25 31 41 44', '23 26 27 35 38 40',
 	'1 7 9 17 27 38', '2 17 20 35 37 39', '6 27 30 36 38 42', '10 22 24 27 38 45',
 	'1 3 17 26 27 42', '1 4 16 23 31 41', '8 16 28 30 31 44', '3 6 18 29 35 39',
-	'5 12 21 33 37 40', '7 9 24 27 35 36', '1 2 4 16 20 32', '16 24 25 30 31 32',
-	'26 30 33 38 39 41', '1 5 7 26 28 43', '8 12 15 29 40 45', '3 15 17 33 34 36',
-	'3 13 15 24 33 37', '6 9 16 19 24 28', '10 16 23 36 39 40', '1 4 11 12 20 41',
-	'7 9 19 23 26 45', '9 19 29 35 37 38', '3 4 12 19 22 27', '5 13 26 29 37 40',
-	'2 8 13 16 23 28', '6 17 22 28 29 32', '14 16 23 25 31 37', '4 15 17 23 27 36',
-	'1 13 21 25 28 31', '8 10 14 20 33 41', '6 12 18 37 40 41', '3 16 18 24 40 44',
+	'5 12 21 33 37 40', '7 9 24 27 35 36', '1 2 4 16 20 32', '16 24 25 30 31 32'
 ]; /* numbers drawn */
+
 loy.cnt = [];
 loy.wins = [];
 
@@ -50,20 +48,14 @@ loy.ball = class {
 	}
 };
 
-loy.c = 20;
-
 loy.mainu = (v) => {
 	const {} = v;
 	
-	if(loy.c) {
-		loy.c--;
-		loy.playu({ c: loy.c });
-	}
-	window.requestAnimationFrame(() => loy.mainu({}));
+	loy.shuffleu({});
 };
 
-loy.playu = (v) => {
-	const { c } = v;
+loy.shuffleu = (v) => {
+	const { } = v;
 
 	/// Basic Balls
 	loy.cnt = [];
@@ -81,7 +73,7 @@ loy.playu = (v) => {
 	}
 
 	/// numbers drawn
-	loy.nda.forEach((e) => {
+	loy.run.forEach((e) => {
 		e.split(' ').forEach((e) => {
 			loy.balls.push(
 				new loy.ball({
@@ -92,7 +84,8 @@ loy.playu = (v) => {
 			);
 		});
 	});
-
+	loy.run.splice(loy.weeks);
+	
 	loy.setu = (v) => {
 		const { l, m } = v; /// least, most
 
@@ -120,29 +113,102 @@ loy.playu = (v) => {
 	});
 	const ns = loy.wins.sort((a, b) => a - b);
 
+	const checknums = document.querySelector('.sheet.fgs>div').children;
+	Array.from(checknums).forEach((e, i) => {
+		if (ns.includes(i + 1)) e.classList.add('on');
+		else e.classList.remove('on');
+	});
+
+	cx.clearRect(0, 0, cs.width, cs.height);
+
 	cx.textAlign = 'left';
-	cx.font = '32px Arial';
+	cx.font = '32px';
 	cx.textBaseline = 'ideographic';
 	cx.fillStyle = '#fff';
-	cx.fillText(ns, 50, 100 + (c*50));
+	cx.fillText(`${ns} weeks: ${loy.weeks}`, 50, 100);
 
+	loy.weeks = loy.weeks - 4; // 24, 20, 16, 12, 8
+	if (loy.weeks < 8) {
+		loy.weeks = 24;
+		loy.run = loy.nda.splice(loy.weeks);
+	}
 };
-
-if (document.readyState === 'complete') loy[loy.fu]({});
-else window.addEventListener('load', (e) => loy[loy.fu]({}));
-
 
 /*** module import env.js, btn.js */
 ((v) => {
 	const { x, w } = v;
+
+	(async (v) => {
+		const {} = v;
+		v.url = `https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do`;
+		
+		try {
+			v.res = await fetch(v.url);
+			v.j = await v.res.json();
+			v.d = v.j.data.list[0];
+
+			loy.now.d = v.d.ltRflYmd;
+			loy.now.t = v.d.ltEpsd;
+			loy.now.n = `${v.d.tm1WnNo} ${v.d.tm2WnNo} ${v.d.tm3WnNo} ${v.d.tm4WnNo} ${v.d.tm5WnNo} ${v.d.tm6WnNo}`;
+
+			if (loy.nda[0].replace(/\s/g, '') !== loy.now.n.replace(/\s/g, '')) loy.nda.unshift(loy.now.n);
+			if (loy.nda.length > loy.weeks) loy.run = loy.nda.splice(loy.weeks); 
+
+			loy.mainu({});
+		} catch (err) {
+			console.error("API 요청 오류:", err);
+		}
+	})({});
+
 
 	(async () => {
 
 		await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
 		x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
 
+		const frameu = (v) => {
+			const {} = v;
+
+			if (x.btnm) {
+				if (Object.keys(x.btnm.evt).length) {
+					if (x.btnm.evt.s) {
+						if (x.btnm.evt.o === 'btnstoto') btnstoto[x.btnm.evt.s]({ e: x.btnm.evt.e });
+		
+						delete x.btnm.evt.o;
+						delete x.btnm.evt.s;
+						delete x.btnm.evt.e;
+					}
+				}
+				/// [`${v.s}u`]({e: v.e});
+			}
+
+			requestAnimationFrame(() => frameu({}));
+		};
+		frameu({});
+
 		await x.importmoduleu({ m: `${dx.basePath}/wore/btn.js` });
 
-	})();
-})({ x: dx.hex, w: { r: 1, wh: { w: 1280, h: 1280 } }, });
 
+		const container = document.querySelector('.sheet.fgs>div'); // 클래스 사이 공백은 '.'으로 연결
+		if (container) {
+			for (let i = 0; i < loy.lcm.m; i++) {
+				container.insertAdjacentHTML('beforeend', `<div><p>${i + 1}</p></div>`);
+			}
+		}
+
+	})();
+})({ x: dx.hex, w: { r: 1, o: {}, wh: { w: 1280, h: 1280 } }, });
+
+
+
+/*** .so.btns */
+const btnstoto = {
+	playu: (v) => {
+		const { e } = v;
+
+		v.c = e.className.match(/on/) ? 'none' : 'block';
+		e.classList.toggle('on');
+
+		loy.mainu({});
+	},
+};

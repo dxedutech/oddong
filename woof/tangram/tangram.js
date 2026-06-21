@@ -797,10 +797,8 @@ const cardu = (v) => {
 			if (x.btnm) {
 				if (Object.keys(x.btnm.evt).length) {
 					if (x.btnm.evt.s) {
-						if (x.btnm.evt.o === 'txtctrl')
-							txtctrl[x.btnm.evt.s]({ e: x.btnm.evt.e, o: o, w: w });
-						if (x.btnm.evt.o === 'btnstangram')
-							btnstangram[x.btnm.evt.s]({ e: x.btnm.evt.e, o: o, w: w });
+						if (x.btnm.evt.o === 'txtctrl') txtctrl[x.btnm.evt.s]({ e: x.btnm.evt.e, o: o, w: w });
+						if (x.btnm.evt.o === 'btnstangram') btnstangram[x.btnm.evt.s]({ e: x.btnm.evt.e, o: o, w: w });
 						if (x.btnm.evt.o === 'btnscard') {
 							v.t = document.querySelector('.sheet.uis .so.cards .thumbs');
 							btnscard[x.btnm.evt.s]({ e: v.t.querySelector('li.on') });
