@@ -49,6 +49,13 @@ loy.ball = class {
 	}
 };
 
+const container = document.querySelector('.sheet.fgs>div'); // 클래스 사이 공백은 '.'으로 연결
+if (container) {
+	for (let i = 0; i < loy.lcm.m; i++) {
+		container.insertAdjacentHTML('beforeend', `<div><p>${i + 1}</p></div>`);
+	}
+}
+
 loy.mainu = (v) => {
 	const {} = v;
 	
@@ -202,19 +209,9 @@ loy.shuffleu = (v) => {
 		frameu({});
 
 		await x.importmoduleu({ m: `${dx.basePath}/wore/btn.js` });
-
-
-		const container = document.querySelector('.sheet.fgs>div'); // 클래스 사이 공백은 '.'으로 연결
-		if (container) {
-			for (let i = 0; i < loy.lcm.m; i++) {
-				container.insertAdjacentHTML('beforeend', `<div><p>${i + 1}</p></div>`);
-			}
-		}
-
+		
 	})();
 })({ x: dx.hex, w: { r: 1, o: {}, wh: { w: 1280, h: 1280 } }, });
-
-
 
 /*** .so.btns */
 const btnstoto = {
