@@ -13,8 +13,10 @@ export default (v => {
     v.j = x.parseattu({ e: e.target }); /* to json */
 
     if (v.j.hasOwnProperty('url')) {
-      console.log('#', v.j.url);
-      location.replace(`./${v.j.url}`);
+			v.p = window.location.pathname;
+      console.log('#', v.j.url, v.p);
+			if(v.p.includes('page')) location.replace(window.location.origin);
+			else location.replace(`./${v.j.url}`);
     }
 
     if (v.j.hasOwnProperty('fn')) {
