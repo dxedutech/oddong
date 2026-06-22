@@ -15,7 +15,7 @@ export default (v => {
     if (v.j.hasOwnProperty('url')) {
 			v.p = window.parent.location.href || window.location.pathname;
       console.log('#', v.j.url, v.p);
-			if(v.p.includes('pages')) location.replace(window.location.origin);
+			if(v.p.includes('pages')) location.replace(window.parent.location.origin || window.location.origin);
 			else location.replace(`./${v.j.url}`);
     }
 
