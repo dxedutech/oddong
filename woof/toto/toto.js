@@ -71,22 +71,25 @@ loy.shuffleu = (v) => {
 
 	for (let i = 0; i < loy.lcm.m; i++) {
 		loy.cnt.push(0);
-		loy.balls.push(
-			new loy.ball({
-				i: `${i + 1}`,
-				t: { x: 0, y: 0, w: 0, h: 0, r: 0, c: '#000' },
-				f: 1.0,
-			}),
-		);
+		// loy.balls.push(
+		// 	new loy.ball({
+		// 		i: `${i + 1}`,
+		// 		t: { x: 0, y: 0, w: 0, h: 0, r: 0, c: '#000' },
+		// 		f: 1.0,
+		// 	}),
+		// );
 	}
 
 	/// numbers drawn
 	Array.from(loy.run).forEach((e) => {
 		Array.from(e.split(' ')).forEach((e) => {
+			v.x = Math.floor(Math.random()*100);
+			v.y = Math.floor(Math.random()*100);
+			v.r = Math.floor(Math.random()*100);
 			loy.balls.push(
 				new loy.ball({
 					i: e,
-					t: { x: 0, y: 0, w: 0, h: 0, r: 0, c: '#000' },
+					t: { x: v.x, y: v.y, w: 0, h: 0, r: v.r, c: '#000' },
 					f: 1.0,
 				}),
 			);
@@ -100,11 +103,11 @@ loy.shuffleu = (v) => {
 		v.f = Math.random() * (m - l) + l;
 		v.dr = v.f * 100.0; /// 0.0 ~ 100.0
 
-		v.rate = 0.0;
+		v.r = 0.0;
 		for (let i = 0; i < loy.balls.length; i++) {
-			v.rate += (loy.balls[i].f * 100) / loy.balls.length;
-			v.num = loy.balls.length - 1 - i;
-			if (v.dr <= v.rate) return parseInt(loy.balls[v.num].i);
+			v.r += (loy.balls[i].f * 100) / loy.balls.length;
+			v.n = loy.balls.length - 1 - i;
+			if (v.dr <= v.r) return parseInt(loy.balls[v.n].i);
 		}
 	};
 
@@ -129,12 +132,21 @@ loy.shuffleu = (v) => {
 
 	cx.clearRect(0, 0, cs.width, cs.height);
 
-	cx.textAlign = 'left';
-	cx.font = '32px';
-	cx.textBaseline = 'ideographic';
-	cx.fillStyle = '#fff';
-	cx.fillText(`${ns} weeks: ${loy.weeks}`, 50, 100);
+	Array.from(loy.balls).forEach((e) => {
+		cx.font = `${e.t.r*2}px PlayTangram`;
+		// cx.textBaseline = 'ideographic';
+		cx.fillStyle = '#aed1';
+		cx.fillText(e.i, e.t.x*12, e.t.y*10+180);
+	});
 
+	cx.textAlign = 'left';
+	cx.font = '32px Pretendard';
+	// cx.textBaseline = 'ideographic';
+	cx.fillStyle = '#fff4';
+	cx.fillText(`${ns} WEEKS: ${loy.weeks}`, 50, 100);
+
+	
+	loy.balls = [];
 	loy.weeks = loy.weeks - 4; // 24, 20, 16, 12, 8
 	if (loy.weeks < 8) {
 		loy.weeks = 24;
@@ -151,17 +163,13 @@ loy.shuffleu = (v) => {
 		v.url = `https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do`;
 		
 		try {
-			v.res = await fetch(v.url);
-			v.j = await v.res.json();
+			v.r = await fetch(v.url);
+			v.j = await v.r.json();
 			v.d = v.j.data.list[0];
 
 			loy.now.d = v.d.ltRflYmd;
 			loy.now.r = parseInt(v.d.ltEpsd);
 			loy.now.s = loy.now.r - loy.weeks;
-			// loy.now.n = `${v.d.tm1WnNo} ${v.d.tm2WnNo} ${v.d.tm3WnNo} ${v.d.tm4WnNo} ${v.d.tm5WnNo} ${v.d.tm6WnNo}`;
-
-			// if (loy.nda[0].replace(/\s/g, '') !== loy.now.n.replace(/\s/g, '')) loy.nda.unshift(loy.now.n);
-			// if (loy.nda.length > loy.weeks) loy.run = loy.nda.splice(loy.weeks); 
 
 		} catch (err) {
 			console.error("API 요청 오류:", err);
@@ -169,9 +177,8 @@ loy.shuffleu = (v) => {
 		}
 
 		try {
-			v.res = await fetch(`${v.url}?srchStrLtEpsd=${loy.now.s}&srchEndLtEpsd=${loy.now.r}`);
-			v.j = await v.res.json();
-			// v.d = v.j.data.list;
+			v.r = await fetch(`${v.url}?srchStrLtEpsd=${loy.now.s}&srchEndLtEpsd=${loy.now.r}`);
+			v.j = await v.r.json();
 
 			loy.nda = v.j.data.list.map(e => `${e.tm1WnNo} ${e.tm2WnNo} ${e.tm3WnNo} ${e.tm4WnNo} ${e.tm5WnNo} ${e.tm6WnNo}`);
 			loy.run = [...loy.nda]; 
@@ -179,7 +186,6 @@ loy.shuffleu = (v) => {
 		} catch (err) {
 			console.error("API 요청 오류:", err);
 		}
-
 	})({});
 
 
