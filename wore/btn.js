@@ -14,7 +14,7 @@ export default (v => {
 
     if (v.j.hasOwnProperty('url')) {
       console.log('#', v.j.url);
-			if(v.j.url === 'https://oddong.com') window.top.location.href = `${v.j.url}`;
+			if(v.j.url.includes('https://')) window.top.location.href = `${v.j.url}`;
 			else location.replace(`./${v.j.url}`);
     }
 
