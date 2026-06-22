@@ -13,9 +13,9 @@ export default (v => {
     v.j = x.parseattu({ e: e.target }); /* to json */
 
     if (v.j.hasOwnProperty('url')) {
-			v.p = window.location.pathname;
+			v.p = window.parent.location.href || window.location.pathname;
       console.log('#', v.j.url, v.p);
-			if(v.p.includes('page')) location.replace(window.location.origin);
+			if(v.p.includes('pages')) location.replace(window.location.origin);
 			else location.replace(`./${v.j.url}`);
     }
 
