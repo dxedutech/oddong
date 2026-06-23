@@ -121,7 +121,7 @@ const txtctrl = {
 		v.e.setAttribute('stroke', '#dae');
 
 		v.p.appendChild(v.e);
-		v.e.style.board = '1px solid #dae';
+		// v.e.style.board = '1px solid #dae'; ///
 	},
 	removeu: (v) => {
 		const { e, o, w } = v;
@@ -509,7 +509,7 @@ const cardu = (v) => {
 				v.e.innerHTML = '<div class="sec">½</div><div class="thumb">NEW</div>';
 				t.querySelector('ul').insertBefore(v.e, e);
 
-				v.e.addEventListener('click', (e) => {
+				v.e.addEventListener('click', (e) => { /// 새로운 카드 이벤트 추가
 					[].forEach.call(t.querySelectorAll('li'), (e) =>
 						e.classList.remove('on'),
 					);
@@ -530,7 +530,7 @@ const cardu = (v) => {
 				v.e.innerHTML = '<div class="sec">½</div><div class="thumb">NEW</div>';
 				t.querySelector('ul').insertBefore(v.e, e.nextElementSibling);
 
-				v.e.addEventListener('click', (e) => {
+				v.e.addEventListener('click', (e) => { /// 새로운 카드 이벤트 추가
 					[].forEach.call(t.querySelectorAll('li'), (e) => e.classList.remove('on'), );
 					e.target.classList.add('on');
 				});
@@ -552,11 +552,11 @@ const cardu = (v) => {
 		},
 		drawu: (v) => {
 			const { e } = v;
-
+			
 			if (e) {
 				v.a = ['¼', '½', '¾', '1', '3'];
 				v.e = e.children[1];
-				v.s = v.e.innerText;
+				v.s = v.e.innerText.trim().toUpperCase();
 
 				if (v.s === 'THUMB' || v.s === 'NEW') {
 					v.h = document.querySelector('.sheet.fgs .so.tangram').innerHTML;
@@ -613,11 +613,11 @@ const cardu = (v) => {
 		},
 	};
 
+	/*** .so.cards thumbs */
 	[].forEach.call(t.querySelectorAll('li'), (e) => {
 		e.addEventListener('click', (e) => {
-			[].forEach.call(t.querySelectorAll('li'), (e) =>
-				e.classList.remove('on'),
-			);
+			console.log('cards thumbs');
+			[].forEach.call(t.querySelectorAll('li'), (e) => e.classList.remove('on'));
 			e.target.classList.add('on');
 		});
 	});
@@ -625,7 +625,7 @@ const cardu = (v) => {
 	document.addEventListener('change', (e) => {
 		if (e.target && e.target.matches('.so.cards .fileimport')) {
 			v.f = e.target.files[0];
-			if (!file) return;
+			if (!v.f) return;
 
 			v.r = new FileReader();
 			v.r.onload = function (e) {

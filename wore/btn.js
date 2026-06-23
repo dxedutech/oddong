@@ -8,7 +8,6 @@ export default (v => {
   const clicku = v => {
     const { e } = v;
 
-		
     // x.loadpageu({ u: '/work/tangent' }); 
     v.j = x.parseattu({ e: e.target }); /* to json */
 
@@ -40,4 +39,4 @@ export default (v => {
   v.devu = devu;
 
   return v;
-})({ x: dx.hex, b: document.querySelectorAll('.so.btns') });
+})({ x: dx.hex, b: document.querySelectorAll('.btns') }); /// 모든 버튼 클릭 이벤트 '.btns'
