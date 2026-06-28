@@ -1,0 +1,5 @@
+<svg width="100%" height="100%" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g transform="matrix(0.5,0,0,0.5,0,0)" style="fill:none;stroke:#dae6;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;">
+        <path d="M20,16L48,32L20,48L20,16Z" />
+    </g>
+</svg>

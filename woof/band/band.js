@@ -130,8 +130,6 @@ loy.shuffleu = (v) => {
 		else e.classList.remove('on');
 	});
 
-	// cx.fillStyle = '#222';
-	// cx.fillRect(0, 0, cs.width, cs.height);
 	cx.clearRect(0, 0, cs.width, cs.height);
 
 	Array.from(loy.balls).forEach((e) => {
@@ -144,7 +142,7 @@ loy.shuffleu = (v) => {
 	cx.textAlign = 'left';
 	cx.font = '32px Pretendard';
 	// cx.textBaseline = 'ideographic';
-	cx.fillStyle = '#fff';
+	cx.fillStyle = '#fff4';
 	cx.fillText(`${ns} WEEKS: ${loy.weeks}`, 50, 100);
 
 	

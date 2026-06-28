@@ -3,7 +3,7 @@
 
 .this { display: flex; justify-content: center; align-items: center; height: 100%; margin: 0; padding: 0; background-color: transparent; }
 
-html, body { display: flex; width: 100%; height: 100%; margin: 0; padding: 0; background: #222; justify-content: center; align-items: center; overflow: hidden; }
+html, body { display: flex; width: 100%; height: 100%; margin: 0; padding: 0; background: #000; justify-content: center; align-items: center; overflow: hidden; }
 body>main, article, .sheet { width: var(--w); height: var(--h); }
 article { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
 .so { position: absolute; }

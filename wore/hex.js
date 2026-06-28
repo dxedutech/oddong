@@ -23,7 +23,7 @@ const loadPage = async (v) => {
 		v.m = await import(`${basePath}/woof/${p}/${p}.js`);
 		if (v.m.init) v.m.init(); /// 해당 자바스크립트를 가져와 해당 함수 실행
 	} catch (e) {
-		console.log('이 페이지는 별도 JS가 필요 없습니다.');
+		console.log(p, '이 페이지는 별도 JS가 필요 없습니다.');
 	}
 };
 
