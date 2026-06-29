@@ -7,14 +7,15 @@ html, body { display: flex; width: 100%; height: 100%; margin: 0; padding: 0; ba
 body>main, article, .sheet { width: var(--w); height: var(--h); }
 article { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
 
-/** .sheet.fgs */
-.sheet.fgs>div { width: 560px; display: flex; flex-wrap: wrap; background-color: #fff; }
-.sheet.fgs>div div { display: flex; width: 64px; height: 96px; margin: 24px 8px; justify-content: center; align-items: center; }
-.sheet.fgs>div div::before { content: ""; position: absolute; margin-bottom: 80px; width: 64px; height: 8px; border: 3px solid var(--hc-tg-lotto); border-bottom: none; }
-.sheet.fgs>div div::after { content: ""; position: absolute; margin-top: 80px; width: 64px; height: 8px; border: 3px solid var(--hc-tg-lotto); border-top: none; }
+/** .sheet.bgs */
+.sheet.bgs>div { width: 100%; display: flex; flex-wrap: wrap; }
+.sheet.bgs>div p { position: absolute; width: 100%; bottom: 32px; font-size: 24px; line-height: 48px; color: #dae; text-align: center; user-select: none; }
 
-.sheet.fgs>div div p { width: 100%; height: 48px; padding: 16px 0; border-radius: 28px; font-size: 48px; line-height: 48px; font-weight: bold; color: var(--hc-tg-lotto); text-align: center; user-select: none; }
-.sheet.fgs>div div.on p { background-color: #444; }
+/** .sheet.fgs */
+.sheet.fgs>div { width: 100%; position: absolute; bottom: 128px; }
+.sheet.fgs>div div { width: 100%; display: flex; flex-wrap: wrap; justify-content: center; }
+.sheet.fgs>div p { width: 44px; height: 48px; margin: 4px; padding: 0 4px; border: 1px solid #dae6; border-radius: 8px; font-size: 24px; line-height: 28px; color: #dae6; user-select: none; }
+.sheet.fgs>div p.on { color: #dae; }
 
 /*** .sheet.uis */
 .sheet.uis .so.btns { position: absolute; left: calc(100% + 8px); top: 50%; }

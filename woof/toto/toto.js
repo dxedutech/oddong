@@ -221,7 +221,7 @@ loy.shuffleu = (v) => {
 	})();
 })({ x: dx.hex, w: { r: 1, o: {}, wh: { w: 1280, h: 1280 } }, });
 
-/*** .so.btns */
+/*** .btns */
 const btnstoto = {
 	playu: (v) => {
 		const { e } = v;

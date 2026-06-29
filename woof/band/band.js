@@ -4,189 +4,133 @@ export function init() {
 	console.log('/// /// Toto');
 }
 
-const cs = document.querySelector('canvas');
-const cx = cs.getContext('2d');
-cs.width = 1280;
-cs.height = 1280;
 
-cx.textAlign = 'left';
-cx.font = '32px Arial';
-cx.textBaseline = 'ideographic';
-cx.maxWidth = cs.width;
-cx.height = cs.height;
+(() => {
+ 
+})();
 
-// cx.fillStyle = 'transparent';
-// cx.fillRect(0, 0, cs.width, cs.height);
-cx.clearRect(0, 0, cs.width, cs.height);
 
-const loy = {};
-loy.lcm = { l: 1, c: 1, m: 45 }; /* least(minimum), current, most(maximum) */
-loy.now = { d: '', r: 0, s: 0, n: '' }; /// day, recent, start, numbers
-loy.weeks = 24; /// 4*2, 4*3, 4*4, 4*5, 4*6 다섯번의 범위 변경 
-loy.run = [];
-loy.nda = [];
-// loy.nda = [
-// 	'24 29 30 31 35 44', '1 14 16 34 41 44', '4 6 13 17 26 28', '8 9 19 25 41 42',
-// 	'9 18 21 27 44 45', '16 18 20 32 33 39', '4 11 17 22 32 41', '6 13 18 28 30 36',
-// 	'2 22 25 28 34 43', '1 2 15 28 39 45', '3 28 31 32 42 45', '8 10 15 20 29 31',
-// 	'10 15 19 27 30 33', '5 11 25 27 36 38', '5 8 25 31 41 44', '23 26 27 35 38 40',
-// 	'1 7 9 17 27 38', '2 17 20 35 37 39', '6 27 30 36 38 42', '10 22 24 27 38 45',
-// 	'1 3 17 26 27 42', '1 4 16 23 31 41', '8 16 28 30 31 44', '3 6 18 29 35 39',
-// 	'5 12 21 33 37 40', '7 9 24 27 35 36', '1 2 4 16 20 32', '16 24 25 30 31 32'
-// ]; /* numbers drawn */
-
-loy.cnt = [];
-loy.wins = [];
-
-loy.balls = [];
-loy.ball = class {
-	constructor(v) {
-		const { i, t, f } = v;
-
-		this.i = i; /// idex
-		this.t = t; /// trans
-		this.f = f; /// frequency
-	}
-};
-
-const container = document.querySelector('.sheet.fgs>div'); // 클래스 사이 공백은 '.'으로 연결
-if (container) {
-	for (let i = 0; i < loy.lcm.m; i++) {
-		container.insertAdjacentHTML('beforeend', `<div><p>${i + 1}</p></div>`);
-	}
-}
-
-loy.mainu = (v) => {
-	const {} = v;
-	
-	loy.shuffleu({});
-};
-
-loy.shuffleu = (v) => {
-	const { } = v;
-
-	/// Basic Balls
-	loy.cnt = [];
-	loy.wins = [0, 0, 0, 0, 0, 0];
-
-	for (let i = 0; i < loy.lcm.m; i++) {
-		loy.cnt.push(0);
-		// loy.balls.push(
-		// 	new loy.ball({
-		// 		i: `${i + 1}`,
-		// 		t: { x: 0, y: 0, w: 0, h: 0, r: 0, c: '#000' },
-		// 		f: 1.0,
-		// 	}),
-		// );
-	}
-
-	/// numbers drawn
-	Array.from(loy.run).forEach((e) => {
-		Array.from(e.split(' ')).forEach((e) => {
-			v.x = Math.floor(Math.random()*100);
-			v.y = Math.floor(Math.random()*100);
-			v.r = Math.floor(Math.random()*100);
-			loy.balls.push(
-				new loy.ball({
-					i: e,
-					t: { x: v.x, y: v.y, w: 0, h: 0, r: v.r, c: '#000' },
-					f: 1.0,
-				}),
-			);
-		});
-	});
-	loy.run.splice(loy.weeks);
-
-	loy.setu = (v) => {
-		const { l, m } = v; /// least, most
-
-		v.f = Math.random() * (m - l) + l;
-		v.dr = v.f * 100.0; /// 0.0 ~ 100.0
-
-		v.r = 0.0;
-		for (let i = 0; i < loy.balls.length; i++) {
-			v.r += (loy.balls[i].f * 100) / loy.balls.length;
-			v.n = loy.balls.length - 1 - i;
-			if (v.dr <= v.r) return parseInt(loy.balls[v.n].i);
-		}
-	};
-
-	Array.from(loy.balls).forEach((e) => {
-		const n = loy.setu({ l: 0.0, m: 1.0 }) - 1;
-		loy.cnt[n]++;
-	});
-
-	Array.from(loy.wins).forEach((e, i) => {
-		const max = Math.max(...loy.cnt);
-		const maxIndex = loy.cnt.indexOf(max);
-		loy.wins[i] = maxIndex + 1;
-		loy.cnt[maxIndex] = 0;
-	});
-	const ns = loy.wins.sort((a, b) => a - b);
-
-	const checknums = document.querySelector('.sheet.fgs>div').children;
-	Array.from(checknums).forEach((e, i) => {
-		if (ns.includes(i + 1)) e.classList.add('on');
-		else e.classList.remove('on');
-	});
-
-	cx.clearRect(0, 0, cs.width, cs.height);
-
-	Array.from(loy.balls).forEach((e) => {
-		cx.font = `${e.t.r*2}px PlayTangram`;
-		// cx.textBaseline = 'ideographic';
-		cx.fillStyle = '#aed1';
-		cx.fillText(e.i, e.t.x*12, e.t.y*10+180);
-	});
-
-	cx.textAlign = 'left';
-	cx.font = '32px Pretendard';
-	// cx.textBaseline = 'ideographic';
-	cx.fillStyle = '#fff4';
-	cx.fillText(`${ns} WEEKS: ${loy.weeks}`, 50, 100);
-
-	
-	loy.balls = [];
-	loy.weeks = loy.weeks - 4; // 24, 20, 16, 12, 8
-	if (loy.weeks < 8) {
-		loy.weeks = 24;
-		loy.run = [...loy.nda];
-	}
-};
 
 /*** module import env.js, btn.js */
 ((v) => {
 	const { x, w } = v;
 
-	(async (v) => {
-		const {} = v;
-		v.url = `https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do`;
-		
-		try {
-			v.r = await fetch(v.url);
-			v.j = await v.r.json();
-			v.d = v.j.data.list[0];
 
-			loy.now.d = v.d.ltRflYmd;
-			loy.now.r = parseInt(v.d.ltEpsd);
-			loy.now.s = loy.now.r - loy.weeks;
 
-		} catch (err) {
-			console.error("API 요청 오류:", err);
-			return;
-		}
+	window.scale = window.scale || 1;
+	const cvs = document.querySelector('canvas');
 
-		try {
-			v.r = await fetch(`${v.url}?srchStrLtEpsd=${loy.now.s}&srchEndLtEpsd=${loy.now.r}`);
-			v.j = await v.r.json();
+	let wh = { w: 1280, h: 1280 };
+	const dpr = window.devicePixelRatio;
+	cvs.style.width = `${wh.w}px`;
+	cvs.style.height = `${wh.h}px`;
+	cvs.width = wh.w * dpr;
+	cvs.height = wh.h * dpr;
 
-			loy.nda = v.j.data.list.map(e => `${e.tm1WnNo} ${e.tm2WnNo} ${e.tm3WnNo} ${e.tm4WnNo} ${e.tm5WnNo} ${e.tm6WnNo}`);
-			loy.run = [...loy.nda]; 
-			loy.mainu({});
-		} catch (err) {
-			console.error("API 요청 오류:", err);
-		}
-	})({});
+	const ctx = cvs.getContext('2d');
+
+	let xy = { x: 35 * dpr, y: 30 * dpr, r: 16 * dpr, o: 16, d: 81 * dpr };
+	let dots = [];
+	let leng = xy.o * 16;
+
+  // ctx.beginPath();
+  let circle = new Path2D();
+  for (let i = 0; i < leng; i++) {
+    let x = (i % xy.o) * xy.d + xy.x;
+    let y = parseInt(i / xy.o) * xy.d + xy.y;
+    circle.moveTo(x + xy.r, y);
+    circle.arc(x, y, xy.r, 0, 2 * Math.PI, false);
+    dots.push({ x: x, y: y, r: xy.r, cc: true });
+  }
+  ctx.fillStyle = 'green';
+  ctx.fill(circle);
+  ctx.lineWidth = 4 * dpr;
+  ctx.strokeStyle = 'pink';
+  ctx.stroke(circle);
+
+  const drawTangents = (p1, p2) => {
+    let dx = p2.x - p1.x;
+    let dy = p2.y - p1.y;
+    let dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist <= Math.abs(p2.r - p1.r)) return;
+
+    let a1 = Math.atan2(dy, dx);
+    let a2 = Math.acos((p1.r - p2.r) / dist);
+
+    let line = new Path2D();
+    if (p1.cc) line.moveTo(p1.x + p1.r * Math.cos(a1 + a2), p1.y + p1.r * Math.sin(a1 + a2));
+    else line.moveTo(p1.x + p1.r * Math.cos(a1 - a2), p1.y + p1.r * Math.sin(a1 - a2));
+
+    if (p2.cc) line.lineTo(p2.x + p2.r * Math.cos(a1 + a2), p2.y + p2.r * Math.sin(a1 + a2));
+    else line.lineTo(p2.x + p2.r * Math.cos(a1 - a2), p2.y + p2.r * Math.sin(a1 - a2));
+
+    ctx.stroke(line);
+  };
+
+  const isIn = (p1, p2, p3, p) => {
+    /// barycentric coordinates
+    let b1 = ((p2.y - p3.y) * (p.x - p3.x) + (p3.x - p2.x) * (p.y - p3.y)) / ((p2.y - p3.y) * (p1.x - p3.x) + (p3.x - p2.x) * (p1.y - p3.y));
+    let b2 = ((p3.y - p1.y) * (p.x - p3.x) + (p1.x - p3.x) * (p.y - p3.y)) / ((p2.y - p3.y) * (p1.x - p3.x) + (p3.x - p2.x) * (p1.y - p3.y));
+    let b3 = 1.0 - b1 - b2;
+
+    return b1 > 0 && b2 > 0 && b3 > 0;
+  };
+
+  const clockwise = (p1, p2, p3) => {
+    let r1 = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+    let r2 = Math.atan2(p3.y - p2.y, p3.x - p2.x);
+    let r0 = Math.abs(r2 - r1);
+
+    let r = r2 - r1 < 0 ? true : false;
+    r = r0 > Math.PI ? !r : r;
+    r = r0 == 0 || r0 == Math.PI ? p1.cc : r;
+
+    return r;
+  };
+
+  const setTangents = (a) => {
+    let l = a.length - 1;
+    
+    a.forEach((e, i) => {
+      let r = false;
+      let i1 = (i + 1) % a.length;
+      let i2 = (i + 2) % a.length;
+
+      r = clockwise(a[i], a[i1], a[i2]);
+      a[i1].cc = r;
+    });
+
+    a.forEach((e, i) => {
+      let r = false;
+      let i1 = (i + 1) % a.length;
+      let i2 = (i + 2) % a.length;
+
+      r = clockwise(a[i], a[i1], a[i2]);
+      a[i1].cc = r;
+
+      drawTangents(a[i], a[i1]);
+    });
+  };
+
+  let dotsClick = [];
+  cvs.addEventListener('mousedown', (e) => {
+    let x = (e.clientX - cvs.getBoundingClientRect().left) * window.scale;
+    let y = (e.clientY - cvs.getBoundingClientRect().top) * window.scale;
+
+    if (ctx.isPointInPath(circle, x * dpr, y * dpr)) {
+      let n = parseInt((x * dpr) / xy.d) + 1 + 12 * parseInt((y * dpr) / xy.d) - 1;
+      if (dotsClick.indexOf(n) < 0) {
+        dotsClick.push(n);
+      } else {
+        let d = [];
+        dotsClick.forEach((e) => {
+          d.push(dots[e]);
+        });
+        if(d.length > 1) setTangents(d);
+        dotsClick = [];
+      }
+    }
+  });
 
 
 	(async () => {
@@ -195,20 +139,9 @@ loy.shuffleu = (v) => {
 		x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
 
 		const frameu = (v) => {
-			const {} = v;
-
-			if (x.btnm) {
-				if (Object.keys(x.btnm.evt).length) {
-					if (x.btnm.evt.s) {
-						if (x.btnm.evt.o === 'btnstoto') btnstoto[x.btnm.evt.s]({ e: x.btnm.evt.e });
 		
-						delete x.btnm.evt.o;
-						delete x.btnm.evt.s;
-						delete x.btnm.evt.e;
-					}
-				}
-				/// [`${v.s}u`]({e: v.e});
-			}
+
+
 
 			requestAnimationFrame(() => frameu({}));
 		};
