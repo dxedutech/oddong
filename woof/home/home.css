@@ -33,12 +33,12 @@
 .this a { font-size: 16px; }
 
 @media (max-width: 768px) {
-  .this p { font-size: 14px; }
+.this p { font-size: 14px; }
 	.this a { font-size: 14px; }
 }
 
 @media (max-width: 480px) {
-  .this p { font-size: 10px; }
+.this p { font-size: 10px; }
 	.this a { font-size: 10px; }
 }
 
@@ -101,4 +101,4 @@ targeting hexagons in even rows - here 2 and 4*/
 .hex>div a { text-decoration: none; color: #dae; z-index: 1; }
 
 .hex.sly>div p { color: var(--hc-tg-green) }
-.hex.sly>div a { position: relative; top: -64px; color: transparent; cursor: default; } 
+.hex.sly>div a { position: relative; top: -64px; color: #fff; cursor: default; } 

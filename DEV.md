@@ -19,7 +19,7 @@ https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do?srchStrLtEpsd=1216&srchE
 
 const checknums = document.querySelector('.sheet.fgs > div').children;
 Array.from(checknums).forEach(e => {
-		console.log(e);
+	console.log(e);
 });
 
 
@@ -27,11 +27,11 @@ Array.from(checknums).forEach(e => {
 
 <div class="iframe-container" style="width: 100%;">
 	<iframe style="width: 100%; aspect-ratio: 1/1; border: none;"
-					src="https://dxedutech.github.io/oddong?page=tangram" 
-					allowtransparency="true" 
-					frameborder="0" 
-					scrolling="no" 
-					allowfullscreen>
+    src="https://dxedutech.github.io/oddong?page=tangram" 
+    allowtransparency="true" 
+    frameborder="0" 
+    scrolling="no" 
+    allowfullscreen>
 	</iframe>
 </div>
 
