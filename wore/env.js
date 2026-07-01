@@ -2,7 +2,7 @@ const supportsTouch = () => 'ontouchstart' in window || navigator.maxTouchPoints
 const isMobileDevice = () => (window.innerWidth <= 768 && window.devicePixelRatio || 1 > 1) || window.innerWidth < 480;
 
 export default (r => {
-  r.devu = '/// v0.0.260615.0003';
+  r.devu = '/// v260701.01';
   r.wh = { w: 0, h: 0 };
   r.hv = { h: 0, v: 0 };
   r.isMobile = supportsTouch() || isMobileDevice();

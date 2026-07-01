@@ -76,21 +76,8 @@ pos.evt.start = wds.mob || wds.tab ? 'touchstart' : 'mousedown';
 pos.evt.move = wds.mob || wds.tab ? 'touchmove' : 'mousemove';
 pos.evt.end = wds.mob || wds.tab ? 'touchend' : 'mouseup';
 
-cv.el.addEventListener(pos.evt.start, e => {
-	const xy = getpos({ x: e.clientX || e.touches[0].clientX, y: e.clientY || e.touches[0].clientY });
-	pos.x = xy.x;
-	pos.y = xy.y;
-	pos.on = 1;
-	pos.off = 0;
-});
 
-cv.el.addEventListener(pos.evt.end, e => { pos.off = 1; });
 
-cv.el.addEventListener(pos.evt.move, e => {
-  const xy = getpos({ x: e.clientX || e.touches[0].clientX, y: e.clientY || e.touches[0].clientY });
-  pos.x = xy.x;
-  pos.y = xy.y;
-});
 
 
 /*** Style to Json */
@@ -121,8 +108,8 @@ const getjson = v => {
 const getptp = v => { const { str } = v; }; /// SVG Path to Point
 
 /*** Frame */
-(async (v) => {
-	const { x, w } = v;
+((v) => {
+	const { x, w, t } = v;
 
 	const setinit = v => {
 		const {} = v;
@@ -290,17 +277,40 @@ const getptp = v => { const { str } = v; }; /// SVG Path to Point
 		
 		if(pos.off){ }
 		
+		t.s = (x.envm && x.envm.r) ? x.envm.r : 1;
+
 		window.requestAnimationFrame(() =>setmain({}));
 	};
 
-	await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
-	x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
+	(async () => {
 
-	setinit({});
+		await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
+		x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
+	
+		setinit({});
 
-	await x.importmoduleu({ m: `${dx.basePath}/wore/btn.js` });
+		cv.el.addEventListener(pos.evt.start, e => {
+			const xy = getpos({ x: e.clientX || e.touches[0].clientX, y: e.clientY || e.touches[0].clientY });
+			pos.x = xy.x / t.s;
+			pos.y = xy.y / t.s;
+			pos.on = 1;
+			pos.off = 0;
+		});
 
-})({ x: dx.hex, w: { r: 1, o: {}, wh: { w: 1280, h: 1280 } }, });
+		cv.el.addEventListener(pos.evt.end, e => { pos.off = 1; });
+
+		cv.el.addEventListener(pos.evt.move, e => {
+			const xy = getpos({ x: e.clientX ?? e.touches[0]?.clientX, y: e.clientY ?? e.touches[0]?.clientY });
+			pos.x = xy.x / t.s;
+			pos.y = xy.y / t.s;
+		});
+
+		await x.importmoduleu({ m: `${dx.basePath}/wore/btn.js` });
+
+	})();
+	
+
+})({ x: dx.hex, w: { r: 1, o: {}, wh: { w: 1280, h: 1280 } }, t: {} });
 
 /*** .btns */
 const btnskortyping = {
