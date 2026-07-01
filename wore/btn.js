@@ -12,8 +12,11 @@ export default (v => {
     v.j = x.parseattu({ e: e.target }); /* to json */
 
     if (v.j.hasOwnProperty('url')) {
-      console.log('#', v.j.url);
-			if(v.j.url.includes('https://')) window.top.location.href = `${v.j.url}`;
+      const params = new URLSearchParams(window.location.search);
+      const home = params.get('home');
+      console.log('#', home, v.j.url);
+			// if(v.j.url.includes('https://')) window.top.location.href = `${v.j.url}`;
+      if(home) window.top.location.href = `https://${home}.com`; /// https://oddong.com
 			else location.replace(`./${v.j.url}`);
     }
 
