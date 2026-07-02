@@ -650,7 +650,7 @@ const cardu = (v) => {
 			
 			e.target.value = ''; /// 동일한 파일을 다시 선택할 수 있도록 값 초기화
 		}
-	});
+	}); 
 	
 	return btnscard;
 };

@@ -9,9 +9,13 @@ export function init() {
 const cvs = {};
 cvs.el = document.querySelector('canvas');
 cvs.xy = { x: 0, y: 0 };
-cvs.wh = { w: cvs.el.width, h: cvs.el.height };
+cvs.wh = { w: 1280, h: 1280 };
+cvs.el.width = cvs.wh.w;
+cvs.el.height = cvs.wh.h;
 
 const ctx = cvs.el.getContext('2d');
+ctx.fillStyle = '#222';
+ctx.fillRect(0, 0, cvs.wh.w, cvs.wh.h);
 
 const fb = {}; /// Flip Book
 fb.on = false; /// true, false
@@ -22,7 +26,7 @@ fb.skip = 5;
 fb.color = [];
 fb.img = [];
 fb.xy = { x: 0, y: 0 };
-fb.wh = { w: 384, h: 512 };
+fb.wh = { w: 560, h: 720 };
 fb.pivot = { x: cvs.wh.w * 0.5, y: (cvs.wh.h - fb.wh.h) * 0.5 + fb.wh.h, pow: 0};
 fb.mark = [];
 fb.ps = []; /// Array pages
@@ -35,9 +39,10 @@ const fbp = function () { /// Flip Book Page
   this.r = [0, 0];
   this.str = ['', ''];
 };
-
-const str = { code: 65 + fb.count - 1, fs: 256, ff: 'bold 96px sans-serif', align: 'center', xy: { x: 0, y: 0 } }; // ASCII Characters code number 65 = A
-str.ff = `bold ${str.fs}px sans-serif`;
+const str = { code: 0xAC00 + fb.count - 1, fs: 312, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // Unicode U+0041 = 'A'
+// const str = { code: 0x0041 + fb.count - 1, fs: 384, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // Unicode U+0041 = 'A'
+/// const str = { code: 65 + fb.count - 1, fs: 384, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // ASCII Characters code number 65 = A
+str.ff = `${str.fs}px PlayTangram`;
 str.xy.x = fb.wh.w * 0.5;
 str.xy.y = fb.wh.h * 0.5 + str.fs * 0.25;
 
@@ -198,7 +203,8 @@ const setsheet = a => {
 
   ctx.save();
   ctx.clearRect(0, 0, cvs.wh.w, cvs.wh.h);
-  ctx.fillStyle = '#ddd';
+
+  ctx.fillStyle = '#222';
   ctx.fillRect(0, 0, cvs.wh.w, cvs.wh.h);
 
   /** Left page :  & Right page : C */

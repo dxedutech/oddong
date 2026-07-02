@@ -3,8 +3,8 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
 
 :root {
-	--w: 1280px ;
-  --h: 1280px ;
+	--w: 1280px;
+  	--h: 1280px;
 	--thumb-nail: 128px;
 	--thumb-margin: 8px;
 
