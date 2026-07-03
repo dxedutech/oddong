@@ -14,6 +14,7 @@ cvs.el.width = cvs.wh.w;
 cvs.el.height = cvs.wh.h;
 
 const ctx = cvs.el.getContext('2d');
+
 ctx.fillStyle = '#222';
 ctx.fillRect(0, 0, cvs.wh.w, cvs.wh.h);
 
@@ -39,7 +40,25 @@ const fbp = function () { /// Flip Book Page
   this.r = [0, 0];
   this.str = ['', ''];
 };
-const str = { code: 0xAC00 + fb.count - 1, fs: 312, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // Unicode U+0041 = 'A'
+
+/// a- animal, h- human, s- story, i- icon
+const codes = { /// must even not odd
+  alphabet: { code: 0x0041, curr: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] },
+  hangeul: { code: 0xAC00, curr: [1, 1176, 588, 1176, 588, 588, 1176, 1176, 588, 1176, 588, 588, 588, 588] },
+  aland: { code: 0xAC34, curr: [1, 1, 1, 1, 3, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1] },
+  amarine: { code: 0xAC55, curr: [1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3] },
+  asky: { code: 0xAC73, curr: [1, 2, 1, 3, 2, 1, 1, 1, 1, 3, 5, 1, 5, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 3] },
+  sarthur: { code: 0xACA2, curr: [1, 1, 1, 1, 1, 1, 4, 2, 1, 3, 1, 1, 1, 1, 1, 1, 3, 4, 1, 1, 2, 1, 2, 1, 1, 2] },
+  ichess: {code: 0x0411, curr: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] },
+  curr: 'hangeul',
+};
+
+fb.count = codes[codes.curr].curr.length;
+
+const str = { code: 0x0041 + fb.count - 1, fs: 312, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // Unicode U+0041 = 'A'
+const cnt = codes[codes.curr].curr.reduce((n, i) => n + i, 0);
+str.code = codes[codes.curr].code + cnt - 1; /// max unicode
+
 // const str = { code: 0x0041 + fb.count - 1, fs: 384, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // Unicode U+0041 = 'A'
 /// const str = { code: 65 + fb.count - 1, fs: 384, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // ASCII Characters code number 65 = A
 str.ff = `${str.fs}px PlayTangram`;
@@ -123,7 +142,8 @@ const setimg = a => {
   i -= i % 1; // parseInt
   fb.ps[0].c[0] = i;
 
-  const t = String.fromCharCode(str.code - n);
+  const uni = (n === 0) ? 0 : codes[codes.curr].curr.slice(-n).reduce((acc, curr) => acc + curr, 0);
+  const t = String.fromCharCode(str.code - uni); /// max unicode - prev unicode...
   fb.ps[0].str[0] = t;
 
   setdraw({ c: i, t: t, xy: fb.ps[0].xy[0], wh: fb.ps[0].wh[0] });
@@ -286,6 +306,19 @@ const setsheet = a => {
 		if (fb.count) { setpage(); }
 		else { setpos({ e: fb.ps[fb.page], n: fb.page }); }
 
+    if (x.btnm) { /// btns
+      if (Object.keys(x.btnm.evt).length) {
+        if (x.btnm.evt.s) {
+          if (x.btnm.evt.o === 'btnsflipbook') btnsflipbook[x.btnm.evt.s]({ e: x.btnm.evt.e });
+  
+          delete x.btnm.evt.o;
+          delete x.btnm.evt.s;
+          delete x.btnm.evt.e;
+        }
+      }
+      /// [`${v.s}u`]({e: v.e});
+    }
+
 		window.requestAnimationFrame(() => setframe({}));
 	};
 
@@ -300,13 +333,44 @@ const setsheet = a => {
 })({ x: dx.hex, w: { r: 1, o: {}, wh: { w: 1280, h: 1280 } }, });
 
 /*** .btns */
-const btnskortyping = {
-	copyu: (v) => {
-		const { e } = v;
-
-		// v.t = 'sdfdsf';
-		navigator.clipboard.writeText(ky.txt)
-		.then(() => console.log('텍스트가 클립보드에 복사되었습니다!'))
-		.catch(err => console.error('복사 실패: ', err));
-	},
+const btnsflipbook = {
+	alphabetu: (v) => btnon(v),
+  hangeulu: (v) => btnon(v),
+  alandu: (v) => btnon(v),
+  amarineu: (v) => btnon(v),
+  askyu: (v) => btnon(v),
+  sarthuru: (v) => btnon(v),
+  ichessu: (v) => btnon(v),
 };
+
+const btnon = (v) => {
+  const { e } = v;
+
+  v.n = e.className.replace(/btn|fpt|on|\s/g, '');
+  const siblings = e.parentElement.children;
+  [].forEach.call(siblings, e => e.classList.remove('on'));
+
+  e.classList.add('on');
+
+  codes.curr = v.n;
+  const cnt = codes[codes.curr].curr.reduce((n, i) => n + i, 0);
+  str.code = codes[codes.curr].code + cnt - 1; /// max unicode
+
+  ctx.fillStyle = '#222';
+  ctx.fillRect(0, 0, cvs.wh.w, cvs.wh.h);
+
+  fb.on = false; /// true, false
+  fb.off = 0; /// -1, 0 ,1
+  fb.page = 0;
+  // fb.count = 26; /// Must be even - 0,1 2,3 4,5 6,7 8,9 10,11 ... 26 /// 26 page, 13 sheet 
+  // fb.skip = 5;
+  fb.color = [];
+  fb.img = [];
+  fb.xy = { x: 0, y: 0 };
+  // fb.wh = { w: 560, h: 720 };
+  // fb.pivot = { x: cvs.wh.w * 0.5, y: (cvs.wh.h - fb.wh.h) * 0.5 + fb.wh.h, pow: 0};
+  fb.mark = [];
+  fb.ps = []; /// Array pages
+
+  fb.count = codes[codes.curr].curr.length;
+}
