@@ -82,7 +82,6 @@ str.code = codes[codes.curr].code + cnt - 1; /// max unicode
 const name = names[codes.curr]?.curr; /// naming
 const nodes = document.querySelectorAll('.sheet.fgs>div>p');
 if (name && name.length, name) {
-  console.log(codes.curr, nodes);
   if (nodes[1]) nodes[1].innerText = '';
   if (nodes[2] && name[0]) nodes[2].innerText = name[0];
   else nodes[2].innerText = '';
@@ -136,7 +135,6 @@ const setmouseup = e => {
   const name = names[codes.curr]?.curr; /// Naming
   const nodes = document.querySelectorAll('.sheet.fgs>div>p');
   if (name && name.length, name) {
-    console.log(codes.curr, nodes);
     if (nodes[1] && name[fb.page + 1]) nodes[1].innerText = name[fb.page + 1];
     else nodes[1].innerText = '';
     if (nodes[2] && name[fb.page + 2]) nodes[2].innerText = name[fb.page + 2];
@@ -399,7 +397,6 @@ const btnon = (v) => {
   const name = names[codes.curr]?.curr; /// naming
   const nodes = document.querySelectorAll('.sheet.fgs>div>p');
   if (name && name.length, name) {
-    console.log(codes.curr, nodes);
     if (nodes[1]) nodes[1].innerText = '';
     if (nodes[2] &&  name[0]) nodes[2].innerText = name[0];
     else nodes[2].innerText = '';
