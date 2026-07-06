@@ -49,8 +49,28 @@ const codes = { /// must even not odd
   amarine: { code: 0xAC55, curr: [1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3] },
   asky: { code: 0xAC73, curr: [1, 2, 1, 3, 2, 1, 1, 1, 1, 3, 5, 1, 5, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 3] },
   sarthur: { code: 0xACA2, curr: [1, 1, 1, 1, 1, 1, 4, 2, 1, 3, 1, 1, 1, 1, 1, 1, 3, 4, 1, 1, 2, 1, 2, 1, 1, 2] },
-  ichess: {code: 0x0411, curr: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] },
-  curr: 'hangeul',
+  ichess: { code: 0x0411, curr: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] },
+  curr: 'aland',
+};
+
+const names = { /// must even not odd
+  alphabet: { curr: [] },
+  hangeul: { curr: [] },
+  aland: { curr: ["Armadillo(아르마딜로)", "Bear(베어)", "Camel(카멜)", "Dog(도그)", "Elephant(엘리펀트)", "Ferret(페럿)", 
+    "Giraffe(지라프)", "Hamster(햄스터)", "Impala(임팔라)", "Jerboa(저보아)", "Kangaroo(캥거루)", "Lion(라이언)", "Monkey(멍키)", 
+    "Nutria(뉴트리아)", "Otter(오터)", "Porcupine(포큐파인)", "Quokka(쿼카)", "Rhinoceros(라이노세로스)", "Sheep(쉽)", "Tiger(타이거)", 
+    "Unau(우나우)", "Vervet(버빗)", "Wolf(울프)", "Xerus(저루스)", "Yak(야크)", "Zebra(제브라)"] },
+  amarine: { curr: ["Anchovy(앤초비)", "Blowfish(블로우피쉬)", "Cuttlefish(커틀피쉬)", "Dolphin(돌핀)", "Eel(일)", "Flyingfish(플라잉피쉬)", 
+    "Great White Shark(그레이트 화이트 샤크)", "Harp Seal(하프 씰)", "Icefish(아이스피쉬)", "Jellyfish(젤리피쉬)", "Kelp(켈프)", "Lobster(랍스터)", 
+    "Mermaid(머메이드)", "Nautilus(노틸러스)", "Octopus(옥토퍼스)", "Octopus(옥토퍼스)", "Queensland Mud Crab(퀸즈랜드 머드 크랩)", "Ray(레이)", "Seahorse(시호스)", 
+    "Turtle(터틀)", "Urchin(얼친)", "Viperfish(바이퍼피쉬)", "Whale(웨일)", "Xiphosura(자이포수라)", "Yellow Tang(옐로우 탱)", "Ziebell's Handfish(지벨스 핸드피쉬)"] },
+  asky: { curr: ["Albatross(알바트로스)", "Buzzard(버저드)", "Crow(크로우)", "Duck(덕)", "Emu(이뮤)", "Flamingo(플라밍고)", "Goose(구스)", "Hummingbird(허밍버드)", 
+    "Ibis(아이비스)", "Jay(제이)", "Kiwi(키위)", "Loon(룬)", "Macaw(마코)", "Nuthatch(너해치)", "Owl(아울)", "Pelican(펠리컨)", "Quail(퀘일)", "Rooster(루스터)", 
+    "Swan(스완)", "Toucan(투칸)", "Ural owl(우랄 아울)", "Vulture(벌처)", "Woodpecker(우드페커)", "Xolmis(졸미스)", "Yellowlegs(옐로우레그스)", "Zoothera(주세라)"] },
+  sarthur: { curr: ["Armor(아머)", "Bow(보우)", "Clover(클로버)", "Diamond(다이아몬드)", "Elf(엘프)", "Fox(폭스)", "Griffon(그리폰)", "Heart(하트)", "Imp(임프)", 
+    "Jack(잭)", "King(킹)", "Lance(랜스)", "Man(맨)", "Nurse(너스)", "Owl(아울)", "Palace(팰리스)", "Queen(퀸)", "Rider(라이더)", "Spade(스페이드)", "Torch(토치)", 
+    "Uniform(유니폼)", "Vase(베이스)", "Woman(우먼)", "Xiphoid(지포이드)", "Yacht(요트)", "Zombie(좀비)"] },
+  ichess: { curr: [] },
 };
 
 fb.count = codes[codes.curr].curr.length;
@@ -58,6 +78,18 @@ fb.count = codes[codes.curr].curr.length;
 const str = { code: 0x0041 + fb.count - 1, fs: 312, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // Unicode U+0041 = 'A'
 const cnt = codes[codes.curr].curr.reduce((n, i) => n + i, 0);
 str.code = codes[codes.curr].code + cnt - 1; /// max unicode
+
+const name = names[codes.curr]?.curr; /// naming
+const nodes = document.querySelectorAll('.sheet.fgs>div>p');
+if (name && name.length, name) {
+  console.log(codes.curr, nodes);
+  if (nodes[1]) nodes[1].innerText = '';
+  if (nodes[2] && name[0]) nodes[2].innerText = name[0];
+  else nodes[2].innerText = '';
+} else {
+  if (nodes[1]) nodes[1].innerText = '';
+  if (nodes[2]) nodes[2].innerText = '';
+}
 
 // const str = { code: 0x0041 + fb.count - 1, fs: 384, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // Unicode U+0041 = 'A'
 /// const str = { code: 65 + fb.count - 1, fs: 384, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // ASCII Characters code number 65 = A
@@ -101,7 +133,15 @@ const setmouseup = e => {
   }
   fb.on = false; /// Tracking mouse position
 
-  // console.log(fb.page, ' : current left page');
+  const name = names[codes.curr]?.curr; /// Naming
+  const nodes = document.querySelectorAll('.sheet.fgs>div>p');
+  if (name && name.length, name) {
+    console.log(codes.curr, nodes);
+    if (nodes[1] && name[fb.page + 1]) nodes[1].innerText = name[fb.page + 1];
+    else nodes[1].innerText = '';
+    if (nodes[2] && name[fb.page + 2]) nodes[2].innerText = name[fb.page + 2];
+    else nodes[2].innerText = '';
+  }
 };
 
 cvs.el.addEventListener('mousemove', e => {
@@ -355,6 +395,18 @@ const btnon = (v) => {
   codes.curr = v.n;
   const cnt = codes[codes.curr].curr.reduce((n, i) => n + i, 0);
   str.code = codes[codes.curr].code + cnt - 1; /// max unicode
+
+  const name = names[codes.curr]?.curr; /// naming
+  const nodes = document.querySelectorAll('.sheet.fgs>div>p');
+  if (name && name.length, name) {
+    console.log(codes.curr, nodes);
+    if (nodes[1]) nodes[1].innerText = '';
+    if (nodes[2] &&  name[0]) nodes[2].innerText = name[0];
+    else nodes[2].innerText = '';
+  } else {
+    if (nodes[1]) nodes[1].innerText = '';
+    if (nodes[2]) nodes[2].innerText = '';
+  }
 
   ctx.fillStyle = '#222';
   ctx.fillRect(0, 0, cvs.wh.w, cvs.wh.h);

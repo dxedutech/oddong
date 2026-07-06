@@ -12,10 +12,9 @@ article { display: flex; flex-direction: column; width: 100%; height: 100%; just
 .sheet.bgs>div p { position: absolute; width: 100%; bottom: 32px; font-size: 24px; line-height: 48px; color: #dae; text-align: center; user-select: none; }
 
 /** .sheet.fgs */
-.sheet.fgs>div { width: 100%; position: absolute; bottom: 128px; }
-.sheet.fgs>div div { width: 100%; display: flex; flex-wrap: wrap; justify-content: center; }
-.sheet.fgs>div p { width: 44px; height: 48px; margin: 4px; padding: 0 4px; border: 1px solid #dae6; border-radius: 8px; font-size: 24px; line-height: 28px; color: #dae6; user-select: none; }
-.sheet.fgs>div p.on { color: #dae; }
+.sheet.fgs>div { position: absolute; display: flex; width: 100%; top:220px; justify-content: center; }
+.sheet.fgs>div>p { width: 544px; height: 48px; margin: 4px; padding: 0 4px; font-size: 24px; text-align: center; color: #eda; user-select: none; }
+.sheet.fgs>div>p:first-child, .sheet.fgs>div>p:last-child { width: 0px; }
 
 /*** .sheet.uis */
 .sheet.uis .so.btns { position: absolute; left: calc(100% + 8px); top: 50%; }
