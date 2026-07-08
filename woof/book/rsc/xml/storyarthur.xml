@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The item count must be an even number -->
+<categories>
+  <category id="sarthur" code="data:image/svg+xml;base64">
+		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+    <item num="1" curr="1" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+    <item num="2" curr="1" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+    <item num="3" curr="1" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+    <item num="4" curr="1" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+    <item num="5" curr="1" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+    <item num="6" curr="1" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+  </category>
+</categories>

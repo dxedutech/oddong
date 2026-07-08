@@ -207,23 +207,23 @@ hex.xmlu = (v) => {
 
 	v.p = new DOMParser();
 	v.d = v.p.parseFromString(e, 'application/xml');
-	hex.parsexmlu({ e: v.d, c: c, p: p });
+
+	return { e: v.d, c: c, p: p };
+	// hex.parsexmlu({ e: v.d, c: c, p: p });
 };
 
-hex.loadFetch = async (v) => {
+hex.loadfetchu = async (v) => {
 	/// url, parent
 	const { u, p } = v;
 
 	v.p = typeof p === 'object' ? p : p.length ? document.querySelector(p) : document.body;
 	v.c = u.match(/([^\/]+)\.[^\.]+$/)[1]; /// Content location index, tangam..., add class list
-	v.e = u.match(/.*\.(\w+)$/)[1];
+	v.e = u.match(/.*\.(\w+)$/)[1]; /// .xml --> xmlu()
 
-	await fetch(u)
+	return await fetch(u)
 		.then((e) => { if (!e.ok) { throw new Error('Network response was not ok'); } return e.text(); })
-		.then((e) => hex[`${v.e}u`]({ e: e, c: v.c, p: v.p }))
-		.catch((e) =>
-			console.error('There was a problem with the fetch operation:', e),
-		);
+		.then((e) => { return { f: v.e, e: e, c: v.c, p: v.p }; })
+		.catch((e) => { console.error('There was a problem with the fetch operation:', e); return null; });
 };
 
 /*** load a CSS */
