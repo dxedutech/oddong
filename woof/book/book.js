@@ -4,8 +4,6 @@ export function init() {
 	console.log('/// /// Flip Book');
 }
 
-
-
 const cvs = {};
 cvs.el = document.querySelector('canvas');
 cvs.xy = { x: 0, y: 0 };
@@ -22,7 +20,7 @@ const fb = {}; /// Flip Book
 fb.on = false; /// true, false
 fb.off = 0; /// -1, 0 ,1
 fb.page = 0;
-fb.count = 26; /// Must be even - 0,1 2,3 4,5 6,7 8,9 10,11 ... 26 /// 26 page, 13 sheet 
+fb.count = 26; /// must even not odd - 26 page, 13 sheet 
 fb.skip = 5;
 fb.color = [];
 fb.img = [];
@@ -31,6 +29,18 @@ fb.wh = { w: 560, h: 720 };
 fb.pivot = { x: cvs.wh.w * 0.5, y: (cvs.wh.h - fb.wh.h) * 0.5 + fb.wh.h, pow: 0};
 fb.mark = [];
 fb.ps = []; /// Array pages
+fb.category = '';
+
+const xml = {};
+xml.doc = undefined;
+xml.categories = {}; /// id { code, title }
+xml.items = {}; /// num, curr, size, en, ko, hg, res
+xml.curr = [];
+
+const str = { code: undefined, fs: 312, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // code: 0x0041 + fb.count - 1
+str.ff = `${str.fs}px PlayTangram`;
+str.xy.x = fb.wh.w * 0.5;
+str.xy.y = fb.wh.h * 0.5 + str.fs * 0.25;
 
 const fbp = function () { /// Flip Book Page
   this.img = [];
@@ -41,80 +51,11 @@ const fbp = function () { /// Flip Book Page
   this.str = ['', ''];
 };
 
-/// a- animal, h- human, s- story, i- icon
-const codes = { /// must even not odd
-  alphabet: { code: 0x0041, curr: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] },
-  hangeul: { code: 0xAC00, curr: [1, 1176, 588, 1176, 588, 588, 1176, 1176, 588, 1176, 588, 588, 588, 588] },
-  aland: { code: 0xAC34, curr: [1, 1, 1, 1, 3, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1] },
-  amarine: { code: 0xAC55, curr: [1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3] },
-  asky: { code: 0xAC73, curr: [1, 2, 1, 3, 2, 1, 1, 1, 1, 3, 5, 1, 5, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 3] },
-  sarthur: { code: 0xACA2, curr: [1, 1, 1, 1, 1, 1, 4, 2, 1, 3, 1, 1, 1, 1, 1, 1, 3, 4, 1, 1, 2, 1, 2, 1, 1, 2] },
-  ichess: { code: 0x0411, curr: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] },
-  curr: 'aland',
-};
-
-// const eng = {
-//   alphabet: { curr: [] },
-//   hangeul: { curr: [] },
-//   aland: { curr: ["Armadillo", "Bear", "Camel", "Dog", "Elephant", "Ferret", "Giraffe", "Hamster", "Impala", "Jerboa", "Kangaroo", "Lion", "Monkey", 
-//     "Nutria", "Otter", "Porcupine", "Quokka", "Rhinoceros", "Sheep", "Tiger", "Unau", "Vervet", "Wolf", "Xerus", "Yak", "Zebra"] },
-//   amarine: { curr: ["Anchovy", "Blowfish", "Cuttlefish", "Dolphin", "Eel", "Flyingfish", "Great White Shark", "Harp Seal", "Icefish", "Jellyfish", "Kelp", "Lobster", 
-//     "Mermaid", "Nautilus", "Octopus", "Queensland Mud Crab", "Ray", "Seahorse", "Turtle", "Urchin", "Viperfish", "Whale", "Xiphosura", "Yellow Tang", "Ziebell's Handfish"] },
-//   asky: { curr: ["Albatross", "Buzzard", "Crow", "Duck", "Emu", "Flamingo", "Goose", "Hummingbird", "Ibis", "Jay", "Kiwi", "Loon", "Macaw", "Nuthatch", 
-//     "Owl", "Pelican", "Quail", "Rooster", "Swan", "Toucan", "Ural owl", "Vulture", "Woodpecker", "Xolmis", "Yellowlegs", "Zoothera"] },
-//   sarthur: { curr: ["Armor", "Bow", "Clover", "Diamond", "Elf", "Fox", "Griffon", "Heart", "Imp", "Jack", "King", "Lance", "Man", "Nurse", "Owl", 
-//     "Palace", "Queen", "Rider", "Spade", "Torch", "Uniform", "Vase", "Woman", "Xiphoid", "Yacht", "Zombie"] },
-//   ichess: { curr: [] },
-// };
-
-const eng = {
-  alphabet: { curr: [] },
-  hangeul: { curr: [] },
-  aland: { curr: ["Armadillo(아르마딜로)", "Bear(베어)", "Camel(카멜)", "Dog(도그)", "Elephant(엘리펀트)", "Ferret(페럿)", 
-    "Giraffe(지라프)", "Hamster(햄스터)", "Impala(임팔라)", "Jerboa(저보아)", "Kangaroo(캥거루)", "Lion(라이언)", "Monkey(멍키)", 
-    "Nutria(뉴트리아)", "Otter(오터)", "Porcupine(포큐파인)", "Quokka(쿼카)", "Rhinoceros(라이노세로스)", "Sheep(쉽)", "Tiger(타이거)", 
-    "Unau(우나우)", "Vervet(버빗)", "Wolf(울프)", "Xerus(저루스)", "Yak(야크)", "Zebra(제브라)"] },
-  amarine: { curr: ["Anchovy(앤초비)", "Blowfish(블로우피쉬)", "Cuttlefish(커틀피쉬)", "Dolphin(돌핀)", "Eel(일)", "Flyingfish(플라잉피쉬)", 
-    "Great White Shark(그레이트 화이트 샤크)", "Harp Seal(하프 씰)", "Icefish(아이스피쉬)", "Jellyfish(젤리피쉬)", "Kelp(켈프)", "Lobster(랍스터)", 
-    "Mermaid(머메이드)", "Nautilus(노틸러스)", "Octopus(옥토퍼스)", "Octopus(옥토퍼스)", "Queensland Mud Crab(퀸즈랜드 머드 크랩)", "Ray(레이)", "Seahorse(시호스)", 
-    "Turtle(터틀)", "Urchin(얼친)", "Viperfish(바이퍼피쉬)", "Whale(웨일)", "Xiphosura(자이포수라)", "Yellow Tang(옐로우 탱)", "Ziebell's Handfish(지벨스 핸드피쉬)"] },
-  asky: { curr: ["Albatross(알바트로스)", "Buzzard(버저드)", "Crow(크로우)", "Duck(덕)", "Emu(이뮤)", "Flamingo(플라밍고)", "Goose(구스)", "Hummingbird(허밍버드)", 
-    "Ibis(아이비스)", "Jay(제이)", "Kiwi(키위)", "Loon(룬)", "Macaw(마코)", "Nuthatch(너해치)", "Owl(아울)", "Pelican(펠리컨)", "Quail(퀘일)", "Rooster(루스터)", 
-    "Swan(스완)", "Toucan(투칸)", "Ural owl(우랄 아울)", "Vulture(벌처)", "Woodpecker(우드페커)", "Xolmis(졸미스)", "Yellowlegs(옐로우레그스)", "Zoothera(주세라)"] },
-  sarthur: { curr: ["Armor(아머)", "Bow(보우)", "Clover(클로버)", "Diamond(다이아몬드)", "Elf(엘프)", "Fox(폭스)", "Griffon(그리폰)", "Heart(하트)", "Imp(임프)", 
-    "Jack(잭)", "King(킹)", "Lance(랜스)", "Man(맨)", "Nurse(너스)", "Owl(아울)", "Palace(팰리스)", "Queen(퀸)", "Rider(라이더)", "Spade(스페이드)", "Torch(토치)", 
-    "Uniform(유니폼)", "Vase(베이스)", "Woman(우먼)", "Xiphoid(지포이드)", "Yacht(요트)", "Zombie(좀비)"] },
-  ichess: { curr: [] },
-};
-
-fb.count = codes[codes.curr].curr.length;
-
-const str = { code: 0x0041 + fb.count - 1, fs: 312, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // Unicode U+0041 = 'A'
-const cnt = codes[codes.curr].curr.reduce((n, i) => n + i, 0);
-str.code = codes[codes.curr].code + cnt - 1; /// max unicode
-
-const name = eng[codes.curr]?.curr; /// naming
-const nodes = document.querySelectorAll('.sheet.fgs>div>p');
-if (name && name.length, name) {
-  if (nodes[1]) nodes[1].innerText = '';
-  if (nodes[2] && name[0]) nodes[2].innerText = name[0];
-  else nodes[2].innerText = '';
-} else {
-  if (nodes[1]) nodes[1].innerText = '';
-  if (nodes[2]) nodes[2].innerText = '';
-}
-
-// const str = { code: 0x0041 + fb.count - 1, fs: 384, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // Unicode U+0041 = 'A'
-/// const str = { code: 65 + fb.count - 1, fs: 384, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // ASCII Characters code number 65 = A
-str.ff = `${str.fs}px PlayTangram`;
-str.xy.x = fb.wh.w * 0.5;
-str.xy.y = fb.wh.h * 0.5 + str.fs * 0.25;
-
 const pos = { xy: [{ x: 0, y: 0 }, { x: 0, y: 0 }], on: false, g: 0.8 }; /// Mouse position
 const getpow = (dx, dy) => { return dx * dx + dy * dy; };
 fb.pivot.pow = getpow(fb.wh.w, 0);
 
-/* Event position */
+/*** Event position */
 cvs.el.addEventListener('mousedown', e => setmousedown(e));
 const setmousedown = e => {
   if (pos.on) return;
@@ -146,14 +87,14 @@ const setmouseup = e => {
   }
   fb.on = false; /// Tracking mouse position
 
-  const name = eng[codes.curr]?.curr; /// Naming
-  const nodes = document.querySelectorAll('.sheet.fgs>div>p');
-  if (name && name.length, name) {
-    if (nodes[1] && name[fb.page + 1]) nodes[1].innerText = name[fb.page + 1];
-    else nodes[1].innerText = '';
-    if (nodes[2] && name[fb.page + 2]) nodes[2].innerText = name[fb.page + 2];
-    else nodes[2].innerText = '';
-  }
+  // const name = eng[codes.curr]?.curr; /// Naming
+  // const nodes = document.querySelectorAll('.sheet.fgs>div>p');
+  // if (name && name.length, name) {
+  //   if (nodes[1] && name[fb.page + 1]) nodes[1].innerText = name[fb.page + 1];
+  //   else nodes[1].innerText = '';
+  //   if (nodes[2] && name[fb.page + 2]) nodes[2].innerText = name[fb.page + 2];
+  //   else nodes[2].innerText = '';
+  // }
 };
 
 cvs.el.addEventListener('mousemove', e => {
@@ -173,7 +114,7 @@ cvs.el.addEventListener('mousemove', e => {
   }
 });
 
-/* Draw */
+/*** Draw */
 const setfill = c => (ctx.fillStyle = `rgba(${c}, ${c}, ${c}, 0.4)`);
 const setrect = (xy, wh) => ctx.fillRect(xy.x, xy.y, wh.w, wh.h);
 
@@ -186,22 +127,22 @@ const setdraw = a => {
   ctx.fillText(t, str.xy.x + xy.x, str.xy.y + xy.y);
 };
 
-const setimg = a => {
-  const { n } = a;
+const setimg = v => {
+  const { n } = v;
 
-  let i = 0;
-  for (i = 0; i < 100; i = i * 10 + Math.random()*4 + 5);
-  i -= i % 1; // parseInt
-  fb.ps[0].c[0] = i;
+  v.i = 0;
+  for (v.i = 0; v.i < 100; v.i = v.i * 10 + Math.random()*4 + 5);
+  v.i -= v.i % 1; // parseInt
+  fb.ps[0].c[0] = v.i;
 
-  const uni = (n === 0) ? 0 : codes[codes.curr].curr.slice(-n).reduce((acc, curr) => acc + curr, 0);
-  const t = String.fromCharCode(str.code - uni); /// max unicode - prev unicode...
-  fb.ps[0].str[0] = t;
+  v.u = (n === 0) ? 0 : xml.curr.slice(-n).reduce((acc, curr) => acc + curr, 0);
+  v.s = String.fromCharCode(str.code - v.u); /// max unicode - prev unicode...
+  fb.ps[0].str[0] = v.s;
 
-  setdraw({ c: i, t: t, xy: fb.ps[0].xy[0], wh: fb.ps[0].wh[0] });
+  setdraw({ c: v.i, t: v.s, xy: fb.ps[0].xy[0], wh: fb.ps[0].wh[0] });
 };
 
-/* Position of mouse */
+/*** Position of mouse */
 const setpos = a => {
   const { e, n } = a;
 
@@ -269,7 +210,7 @@ const setpos = a => {
   setsheet({ n: fb.page });
 };
 
-/* Sheet */
+/*** Sheet */
 const setsheet = a => {
   const { n } = a;
 
@@ -304,7 +245,7 @@ const setsheet = a => {
     const dx = (dxy.y*dxy.y*0.5) / dxy.x + dxy.x*0.5;
     const dy = (dxy.x*dxy.x*0.5) / dxy.y + dxy.y*0.5;
      
-    /** Current sheet front page: A */
+    /*** Current sheet front page: A */
     ctx.beginPath();
     ctx.translate(xy.x, xy.y);
     
@@ -319,7 +260,7 @@ const setsheet = a => {
     ctx.clip();
     setdraw({ c: fp.c[0], t: fp.str[0], xy: { x: 0, y: 0 }, wh: wh });
     
-    /** Current sheet back page: B */
+    /*** Current sheet back page: B */
     const dr = Math.atan2(dxy.y*fb.off, dxy.x)*2;
     const dw = dxy.x*fb.off*-1 + Math.sin(dr)*wh.h;
     const dh = wh.h - dxy.y - Math.cos(dr)*wh.h;
@@ -374,12 +315,42 @@ const setsheet = a => {
 		window.requestAnimationFrame(() => setframe({}));
 	};
 
+  /*** Load xml */
   v.f = await x.loadfetchu({ u: `${dx.basePath}/woof/book/rsc/xml/playtangram.xml`, p: '.sheet.fgs' });
   v.e = x[`${v.f.f}u`]({ e: v.f.e, c: v.f.c, p: v.f.p }); /// xmlu, svgu, htmlu...
-  v.c = v.e.e.querySelectorAll('category');
-  [].forEach.call(v.c, e => {
-    console.log(e.getAttribute('id'));
+  xml.doc = v.e.e;
+  xml.categories = {};
+  v.b = document.querySelector('.sheet.uis .btns.categories');
+  [].forEach.call(xml.doc.querySelectorAll('category'), (e, i) => {
+    v.i = e.getAttribute('id');
+    v.c = e.getAttribute('code');
+    v.t = e.getAttribute('title');
+    v.s = String.fromCharCode(parseInt(v.c, 16));
+    xml.categories[v.i] = { code: v.c, title: v.t };
+    v.o = i === 0 ? `btn ${v.i} fpt on` : `btn ${v.i} fpt`; /// Class
+    v.b.insertAdjacentHTML('beforeend', `<button class="${v.o}" js="'obj': 'btnsflipbook', 'fn': 'categoriesu'"><span>${v.t}</span>${v.s}</button>`);
   });
+
+  xml.items = [];
+  xml.curr = [];
+  v.e = xml.doc.querySelectorAll('category')[0];
+  [].forEach.call(v.e.querySelectorAll('item'), e => {
+    v.curr = parseInt(e.getAttribute('curr'));
+    xml.curr.push(v.curr);
+    xml.items.push({ 
+      num: parseInt(e.getAttribute('num')), 
+      curr: v.curr, 
+      size: parseInt(e.getAttribute('size')),
+      en: e.querySelector('en').textContent,
+      ko: e.querySelector('ko').textContent,
+      hg: e.querySelector('hg').textContent,
+    });
+  });
+  
+  fb.count = xml.curr.length;
+  v.cnt = xml.curr.reduce((n, i) => n + i, 0);
+  str.code = Number(v.e.getAttribute('code')) + v.cnt - 1; /// max unicode
+  console.log(xml.curr, v.cnt, str.code);
 
 	await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
 	x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
@@ -392,13 +363,16 @@ const setsheet = a => {
 
 /*** .btns */
 const btnsflipbook = {
-	alphabetu: (v) => btnon(v),
-  hangeulu: (v) => btnon(v),
-  alandu: (v) => btnon(v),
-  amarineu: (v) => btnon(v),
-  askyu: (v) => btnon(v),
-  sarthuru: (v) => btnon(v),
-  ichessu: (v) => btnon(v),
+  menuu: (v) => {},
+  categoriesu: (v) => { 
+    const { e } = v;
+
+    v.s = e.className.replace(/btn|fpt|on|\s/g, '');
+    const siblings = e.parentElement.children;
+  [].forEach.call(siblings, e => e.classList.remove('on'));
+    console.log(v.s); 
+
+  }
 };
 
 const btnon = (v) => {
@@ -414,16 +388,16 @@ const btnon = (v) => {
   const cnt = codes[codes.curr].curr.reduce((n, i) => n + i, 0);
   str.code = codes[codes.curr].code + cnt - 1; /// max unicode
 
-  const name = eng[codes.curr]?.curr; /// naming
-  const nodes = document.querySelectorAll('.sheet.fgs>div>p');
-  if (name && name.length, name) {
-    if (nodes[1]) nodes[1].innerText = '';
-    if (nodes[2] &&  name[0]) nodes[2].innerText = name[0];
-    else nodes[2].innerText = '';
-  } else {
-    if (nodes[1]) nodes[1].innerText = '';
-    if (nodes[2]) nodes[2].innerText = '';
-  }
+  // const name = eng[codes.curr]?.curr; /// naming
+  // const nodes = document.querySelectorAll('.sheet.fgs>div>p');
+  // if (name && name.length, name) {
+  //   if (nodes[1]) nodes[1].innerText = '';
+  //   if (nodes[2] &&  name[0]) nodes[2].innerText = name[0];
+  //   else nodes[2].innerText = '';
+  // } else {
+  //   if (nodes[1]) nodes[1].innerText = '';
+  //   if (nodes[2]) nodes[2].innerText = '';
+  // }
 
   ctx.fillStyle = '#222';
   ctx.fillRect(0, 0, cvs.wh.w, cvs.wh.h);

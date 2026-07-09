@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- The item count must be an even number -->
 <categories>
-	<category id="alphabet" code="0x0041">
-		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+	<category id="alphabet" code="0x0041" title="ABC">
 		<item num="1" curr="1" size="14"><en>A</en><ko>에이</ko><hg></hg><res></res></item>
     <item num="2" curr="1" size="14"><en>B</en><ko>비</ko><hg></hg><res></res></item>
     <item num="3" curr="1" size="14"><en>C</en><ko>씨</ko><hg></hg><res></res></item>
@@ -29,11 +28,9 @@
     <item num="24" curr="1" size="14"><en>X</en><ko>엑스</ko><hg></hg><res></res></item>
     <item num="25" curr="1" size="14"><en>Y</en><ko>와이</ko><hg></hg><res></res></item>
     <item num="26" curr="1" size="14"><en>Z</en><ko>젯</ko><hg></hg><res></res></item>
-		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
 	</category>
 
-	<category id="hangeul" code="0xAC00">
-		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+	<category id="hangeul" code="0xAC00" title="가나다">
 		<item num="1" curr="1" size="14"><en>GA</en><ko>가</ko><hg></hg><res></res></item>
     <item num="2" curr="1176" size="14"><en>NA</en><ko>나</ko><hg></hg><res></res></item>
     <item num="3" curr="588" size="14"><en>DA</en><ko>다</ko><hg></hg><res></res></item>
@@ -48,11 +45,9 @@
     <item num="12" curr="588" size="14"><en>TA</en><ko>타</ko><hg></hg><res></res></item>
     <item num="13" curr="588" size="14"><en>PA</en><ko>파</ko><hg></hg><res></res></item>
     <item num="14" curr="588" size="14"><en>HA</en><ko>하</ko><hg></hg><res></res></item>
-		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
 	</category>
 
-  <category id="aland" code="0xAC34">
-		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+  <category id="aland" code="0xAC34" title="ANIMAL LAND">
     <item num="1" curr="1" size="14"><en>Armadillo</en><ko>아르마딜로</ko><hg>아르마딜로</hg><res></res></item>
     <item num="2" curr="1" size="14"><en>Bear</en><ko>베어</ko><hg>곰</hg><res></res></item>
     <item num="3" curr="1" size="14"><en>Camel</en><ko>카멜</ko><hg>낙타</hg><res></res></item>
@@ -79,11 +74,9 @@
     <item num="24" curr="1" size="14"><en>Xerus</en><ko>저루스</ko><hg>아프리카땅다람쥐</hg><res></res></item>
     <item num="25" curr="1" size="14"><en>Yak</en><ko>야크</ko><hg>야크</hg><res></res></item>
     <item num="26" curr="1" size="14"><en>Zebra</en><ko>제브라</ko><hg>얼룩말</hg><res></res></item>
-		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
   </category>
 
-  <category id="amarine" code="0xAC55">
-    <item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+  <category id="amarine" code="0xAC55" title="ANIMAL MARINE">
 		<item num="1" curr="1" size="14"><en>Anchovy</en><ko>앤초비</ko><hg>멸치</hg><res></res></item>
     <item num="2" curr="1" size="14"><en>Blowfish</en><ko>블로우피쉬</ko><hg>복어</hg><res></res></item>
     <item num="3" curr="1" size="14"><en>Cuttlefish</en><ko>커틀피쉬</ko><hg>갑오징어</hg><res></res></item>
@@ -110,11 +103,9 @@
     <item num="24" curr="1" size="14"><en>Xiphosura</en><ko>자이포수라</ko><hg>투구게</hg><res></res></item>
     <item num="25" curr="1" size="14"><en>Yellow Tang</en><ko>옐로우 탱</ko><hg>노랑쥐돔</hg><res></res></item>
     <item num="26" curr="3" size="14"><en>Ziebell's Handfish</en><ko>지벨스 핸드피쉬</ko><hg></hg><res></res></item>
-		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
   </category>
 
-  <category id="asky" code="0xAC73">
-		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+  <category id="asky" code="0xAC73" title="ANIMAL SKY">
     <item num="1" curr="1" size="14"><en>Albatross</en><ko>알바트로스</ko><hg>신천옹</hg><res></res></item>
     <item num="2" curr="2" size="14"><en>Buzzard</en><ko>버저드</ko><hg>말똥가리</hg><res></res></item>
     <item num="3" curr="1" size="14"><en>Crow</en><ko>크로우</ko><hg>까마귀</hg><res></res></item>
@@ -141,11 +132,9 @@
     <item num="24" curr="1" size="14"><en>Xolmis</en><ko>졸미스</ko><hg>타이런트딱새류</hg><res></res></item>
     <item num="25" curr="1" size="14"><en>Yellowlegs</en><ko>옐로우레그스</ko><hg>노랑발도요</hg><res></res></item>
     <item num="26" curr="3" size="14"><en>Zoothera</en><ko>주세라</ko><hg>지빠귀류</hg><res></res></item>
-		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
   </category>
 
-  <category id="sarthur" code="0xACA2">
-		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
+  <category id="sarthur" code="0xACA2" title="THE KING ARTHUR">
     <item num="1" curr="1" size="14"><en>Armor</en><ko>아머</ko><hg>갑옷</hg><res></res></item>
     <item num="2" curr="1" size="14"><en>Bow</en><ko>보우</ko><hg>활</hg><res></res></item>
     <item num="3" curr="1" size="14"><en>Clover</en><ko>클로버</ko><hg>클로버</hg><res></res></item>
@@ -172,11 +161,9 @@
     <item num="24" curr="1" size="14"><en>Xiphoid</en><ko>지포이드</ko><hg>칼모양의</hg><res></res></item>
     <item num="25" curr="1" size="14"><en>Yacht</en><ko>요트</ko><hg>요트</hg><res></res></item>
     <item num="26" curr="2" size="14"><en>Zombie</en><ko>좀비</ko><hg>좀비</hg><res></res></item>
-		<item num="0" curr="0" size="14"><en></en><ko></ko><hg></hg><res></res></item>
   </category>
 
-	<category id="ichess" code="0x0411">
-		<item num="0" curr="0" size="12"><en></en><ko></ko><hg></hg><res></res></item>
+	<category id="ichess" code="0x0411" title="CHESS">
 		<item num="1" curr="1" size="12"><en>Black squares</en><ko>블랙 스퀘어</ko><hg>검은 칸</hg><res></res></item>
 		<item num="2" curr="1" size="12"><en>White squares</en><ko>화이트 스퀘어</ko><hg>하얀 칸</hg><res></res></item>
 		<item num="3" curr="1" size="12"><en>A black pawn on a black square</en><ko>어 블랙 폰 온 머 블랙 스쿼어</ko><hg>검은 칸 위에 검은 졸</hg><res></res></item>
@@ -203,6 +190,5 @@
 		<item num="24" curr="1" size="12"><en>A White Rook on a White square</en><ko>어 화이트 룩 온 머 화이트 스쿼어</ko><hg>하얀 칸 위에 하얀 차</hg><res></res></item>
 		<item num="25" curr="1" size="12"><en>A White Queen on a White square</en><ko>어 화이트 퀸 온 머 화이트 스쿼어</ko><hg>하얀 칸 위에 하얀 여왕</hg><res></res></item>
 		<item num="26" curr="1" size="12"><en>A White King on a White square</en><ko>어 화이트 킹 온 머 화이트 스쿼어</ko><hg>하얀 칸 위에 하얀 왕</hg><res></res></item>
-		<item num="0" curr="0" size="12"><en></en><ko></ko><hg></hg><res></res></item>
 	</category>
 </categories>
