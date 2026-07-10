@@ -13,6 +13,8 @@ article { display: flex; flex-direction: column; width: 100%; height: 100%; just
 
 /** .sheet.fgs */
 .sheet.fgs>div { position: absolute; display: flex; width: 100%; top:220px; justify-content: center; }
+.sheet.fgs>div.ko { top: 180px; }
+.sheet.fgs>div.hg { top: 140px; }
 .sheet.fgs>div>p { width: 544px; height: 48px; margin: 4px; padding: 0 4px; font-size: 24px; text-align: center; color: #eda; user-select: none; }
 .sheet.fgs>div>p:first-child, .sheet.fgs>div>p:last-child { width: 0px; }
 
@@ -27,9 +29,10 @@ article { display: flex; flex-direction: column; width: 100%; height: 100%; just
 .sheet.uis .so.btns .btn { 
 	position: relative; display: flex; 
 	width: 64px; height: 64px; margin: 8px; 
-	border: 1px solid #daea; 
+	border: 1px solid #dae6; 
 	font-size: 40px; line-height: 40px; color: #dae;
 	justify-content: center; align-items: center; cursor: pointer; 
+	user-select: none;
 }
 .sheet.uis .so.btns .btn span { position: absolute; display: block; font-size: 0px; white-space: nowrap; }
 .sheet.uis .so.btns .btn:hover span { font-size: 24px; }
@@ -42,4 +45,3 @@ article { display: flex; flex-direction: column; width: 100%; height: 100%; just
 
 .sheet.uis .so.btns.categories .btn span { right: 80px; text-align: right; }
 .sheet.uis.vertical .so.btns.categories .btn span { left: auto; right: 0; top: -48px; }
-

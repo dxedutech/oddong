@@ -33,14 +33,14 @@ fb.category = '';
 
 const xml = {};
 xml.doc = undefined;
-xml.categories = {}; /// id { code, title }
-xml.items = {}; /// num, curr, size, en, ko, hg, res
+xml.categories = []; /// { id , code, title }
+xml.items = []; /// num, curr, size, en, ko, hg, res
 xml.curr = [];
 
-const str = { code: undefined, fs: 312, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // code: 0x0041 + fb.count - 1
-str.ff = `${str.fs}px PlayTangram`;
-str.xy.x = fb.wh.w * 0.5;
-str.xy.y = fb.wh.h * 0.5 + str.fs * 0.25;
+const str = { code: undefined, fs: 384, ff: '', align: 'center', xy: { x: 0, y: 0 } }; // code: 0x0041 + fb.count - 1
+// str.ff = `${str.fs}px PlayTangram`;
+// str.xy.x = fb.wh.w * 0.5;
+// str.xy.y = fb.wh.h * 0.5 + str.fs * 0.25;
 
 const fbp = function () { /// Flip Book Page
   this.img = [];
@@ -85,16 +85,8 @@ const setmouseup = e => {
     pos.xy[1].y = e.offsetY > fb.pivot.y ? fb.pivot.y - 0.1 : e.offsetY;
     pos.xy[1].y = fb.pivot.y - pos.xy[1].y;
   }
-  fb.on = false; /// Tracking mouse position
 
-  // const name = eng[codes.curr]?.curr; /// Naming
-  // const nodes = document.querySelectorAll('.sheet.fgs>div>p');
-  // if (name && name.length, name) {
-  //   if (nodes[1] && name[fb.page + 1]) nodes[1].innerText = name[fb.page + 1];
-  //   else nodes[1].innerText = '';
-  //   if (nodes[2] && name[fb.page + 2]) nodes[2].innerText = name[fb.page + 2];
-  //   else nodes[2].innerText = '';
-  // }
+  fb.on = false; /// Tracking mouse position
 };
 
 cvs.el.addEventListener('mousemove', e => {
@@ -173,7 +165,7 @@ const setpos = a => {
         e.xy[1].x = e.wh[0].w*((n + 1)%2) - xy.x*fb.off;
         e.xy[1].y = e.wh[0].h - xy.y;
 
-        if (Math.abs(pos.xy[1].x) < 1 && pos.xy[1].y < 1) {
+        if (Math.abs(pos.xy[1].x) < 1 && pos.xy[1].y < 1) { /// Flip DOne
           const osp = fb.page; /// Other Side Page
           fb.page = (fb.page + fb.off)%fb.ps.length;
 
@@ -190,9 +182,11 @@ const setpos = a => {
           e.xy[1].y = 0;
           fb.off = 0;
           pos.on = false;
+
+          settitle({ p: fb.page }); 
         }
 
-      } else { /// Cancel Flip
+      } else { /// Flip cancel 
         e.xy[1].x = e.xy[1].x*pos.g + 1;
         e.xy[1].y = e.xy[1].y*pos.g + 1;
 
@@ -273,13 +267,102 @@ const setsheet = a => {
   }
 };
 
+/*** Contents */
+const setcontent = (v) => {
+  const { c } = v;
+
+  ctx.fillStyle = '#222';
+  ctx.fillRect(0, 0, cvs.wh.w, cvs.wh.h);
+
+  fb.on = false; /// true, false
+  fb.off = 0; /// -1, 0 ,1
+  fb.page = 0;
+  fb.color = [];
+  fb.img = [];
+  fb.xy = { x: 0, y: 0 };
+  fb.mark = [];
+  fb.ps = []; /// Array pages
+
+  // v.i = Array.from(xml.categories).find(e => e.id === c);
+  v.i = Array.from(xml.categories).findIndex(e => e.id === c);
+
+  str.fs = xml.categories[v.i].size;
+  str.ff = `${str.fs}px PlayTangram`;
+  str.xy.x = fb.wh.w * 0.5;
+  str.xy.y = fb.wh.h * 0.5 + str.fs * 0.25;
+
+  ctx.font = str.ff;
+	ctx.textAlign = str.align;
+	ctx.save();
+
+  xml.items = [];
+  xml.curr = [];
+  v.e = xml.doc.querySelectorAll('category')[v.i];
+  [].forEach.call(v.e.querySelectorAll('item'), e => {
+    v.curr = parseInt(e.getAttribute('curr'));
+    xml.curr.push(v.curr);
+    xml.items.push({ 
+      num: parseInt(e.getAttribute('num')), 
+      curr: v.curr, 
+      size: parseInt(e.getAttribute('size')),
+      en: e.querySelector('en').textContent,
+      ko: e.querySelector('ko').textContent,
+      hg: e.querySelector('hg').textContent,
+    });
+  });
+  
+  fb.count = xml.curr.length;
+  v.cnt = xml.curr.reduce((n, i) => n + i, 0);
+  str.code = Number(v.e.getAttribute('code')) + v.cnt - 1; /// max unicode
+};
+
+/*** Title */
+const settitle = (v) => {
+  const { p } = v;
+
+  v.e = document.querySelectorAll('.sheet.fgs>div>p');
+  if( p === 0 ) {
+
+    v.e[1].innerText = '';
+    v.e[2].innerText = xml.items[p].hg;
+
+    v.e[5].innerText = '';
+    v.e[6].innerText = xml.items[p].ko;
+
+    v.e[9].innerText = '';
+    v.e[10].innerText = xml.items[p].en;
+
+    return;
+  }
+
+  if( p === xml.curr.length - 1 ) {
+
+    v.e[1].innerText = xml.items[p].hg;
+    v.e[2].innerText = '';
+
+    v.e[5].innerText = xml.items[p].ko;
+    v.e[6].innerText = '';
+
+    v.e[9].innerText = xml.items[p].en;
+    v.e[10].innerText = '';
+
+    return;
+  }
+
+  v.p = p%2 ? p : p - 1;
+  v.e[1].innerText = xml.items[v.p].hg;
+  v.e[2].innerText = xml.items[v.p + 1].hg;
+
+  v.e[5].innerText = xml.items[v.p].ko;
+  v.e[6].innerText = xml.items[v.p + 1].ko;
+
+  v.e[9].innerText = xml.items[v.p].en ;
+  v.e[10].innerText = xml.items[v.p + 1].en;
+};
+
 /*** Frame */
 (async (v) => {
 	const { x, w } = v;
-
-	ctx.font = str.ff;
-	ctx.textAlign = str.align;
-	ctx.save();
 
 	const setpage = () => {
 		--fb.count;
@@ -319,38 +402,20 @@ const setsheet = a => {
   v.f = await x.loadfetchu({ u: `${dx.basePath}/woof/book/rsc/xml/playtangram.xml`, p: '.sheet.fgs' });
   v.e = x[`${v.f.f}u`]({ e: v.f.e, c: v.f.c, p: v.f.p }); /// xmlu, svgu, htmlu...
   xml.doc = v.e.e;
-  xml.categories = {};
+  xml.categories = [];
   v.b = document.querySelector('.sheet.uis .btns.categories');
   [].forEach.call(xml.doc.querySelectorAll('category'), (e, i) => {
     v.i = e.getAttribute('id');
     v.c = e.getAttribute('code');
     v.t = e.getAttribute('title');
+    v.z = e.getAttribute('size');
     v.s = String.fromCharCode(parseInt(v.c, 16));
-    xml.categories[v.i] = { code: v.c, title: v.t };
+    xml.categories.push({ id: v.i, code: v.c, title: v.t, size: v.z });
     v.o = i === 0 ? `btn ${v.i} fpt on` : `btn ${v.i} fpt`; /// Class
     v.b.insertAdjacentHTML('beforeend', `<button class="${v.o}" js="'obj': 'btnsflipbook', 'fn': 'categoriesu'"><span>${v.t}</span>${v.s}</button>`);
   });
-
-  xml.items = [];
-  xml.curr = [];
-  v.e = xml.doc.querySelectorAll('category')[0];
-  [].forEach.call(v.e.querySelectorAll('item'), e => {
-    v.curr = parseInt(e.getAttribute('curr'));
-    xml.curr.push(v.curr);
-    xml.items.push({ 
-      num: parseInt(e.getAttribute('num')), 
-      curr: v.curr, 
-      size: parseInt(e.getAttribute('size')),
-      en: e.querySelector('en').textContent,
-      ko: e.querySelector('ko').textContent,
-      hg: e.querySelector('hg').textContent,
-    });
-  });
-  
-  fb.count = xml.curr.length;
-  v.cnt = xml.curr.reduce((n, i) => n + i, 0);
-  str.code = Number(v.e.getAttribute('code')) + v.cnt - 1; /// max unicode
-  console.log(xml.curr, v.cnt, str.code);
+  setcontent({ c: "alphabet" });
+  settitle({ p: 0 });
 
 	await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
 	x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
@@ -363,57 +428,21 @@ const setsheet = a => {
 
 /*** .btns */
 const btnsflipbook = {
-  menuu: (v) => {},
+  menuu: (v) => {
+    const { e } = v;
+
+    v.s = e.className.replace(/btn|fpt|on|\s/g, '');
+    // console.log(v.s);
+  },
   categoriesu: (v) => { 
     const { e } = v;
 
     v.s = e.className.replace(/btn|fpt|on|\s/g, '');
     const siblings = e.parentElement.children;
-  [].forEach.call(siblings, e => e.classList.remove('on'));
-    console.log(v.s); 
+    [].forEach.call(siblings, e => e.classList.remove('on'));
+    e.classList.add('on');
 
+    setcontent({ c: v.s });
+    settitle({ p: 0 }); 
   }
 };
-
-const btnon = (v) => {
-  const { e } = v;
-
-  v.n = e.className.replace(/btn|fpt|on|\s/g, '');
-  const siblings = e.parentElement.children;
-  [].forEach.call(siblings, e => e.classList.remove('on'));
-
-  e.classList.add('on');
-
-  codes.curr = v.n;
-  const cnt = codes[codes.curr].curr.reduce((n, i) => n + i, 0);
-  str.code = codes[codes.curr].code + cnt - 1; /// max unicode
-
-  // const name = eng[codes.curr]?.curr; /// naming
-  // const nodes = document.querySelectorAll('.sheet.fgs>div>p');
-  // if (name && name.length, name) {
-  //   if (nodes[1]) nodes[1].innerText = '';
-  //   if (nodes[2] &&  name[0]) nodes[2].innerText = name[0];
-  //   else nodes[2].innerText = '';
-  // } else {
-  //   if (nodes[1]) nodes[1].innerText = '';
-  //   if (nodes[2]) nodes[2].innerText = '';
-  // }
-
-  ctx.fillStyle = '#222';
-  ctx.fillRect(0, 0, cvs.wh.w, cvs.wh.h);
-
-  fb.on = false; /// true, false
-  fb.off = 0; /// -1, 0 ,1
-  fb.page = 0;
-  // fb.count = 26; /// Must be even - 0,1 2,3 4,5 6,7 8,9 10,11 ... 26 /// 26 page, 13 sheet 
-  // fb.skip = 5;
-  fb.color = [];
-  fb.img = [];
-  fb.xy = { x: 0, y: 0 };
-  // fb.wh = { w: 560, h: 720 };
-  // fb.pivot = { x: cvs.wh.w * 0.5, y: (cvs.wh.h - fb.wh.h) * 0.5 + fb.wh.h, pow: 0};
-  fb.mark = [];
-  fb.ps = []; /// Array pages
-
-  fb.count = codes[codes.curr].curr.length;
-}
