@@ -167,26 +167,26 @@
 		<item num="1" curr="1" size="12"><en>Black squares</en><ko>블랙 스퀘어</ko><hg>검은 칸</hg><res></res></item>
 		<item num="2" curr="1" size="12"><en>White squares</en><ko>화이트 스퀘어</ko><hg>하얀 칸</hg><res></res></item>
 		<item num="3" curr="1" size="12"><en>A black pawn on a black square</en><ko>어 블랙 폰 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 검은 졸</hg><res></res></item>
-		<item num="4" curr="1" size="12"><en>A black Knight on a black square</en><ko>어 블랙 나이트 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 검은 말</hg><res></res></item>
-		<item num="5" curr="1" size="12"><en>A black Bishop on a black square</en><ko>어 블랙 비숍 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 검은 상</hg><res></res></item>
+		<item num="4" curr="1" size="12"><en>A black Bishop on a black square</en><ko>어 블랙 비숍 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 검은 상</hg><res></res></item>
+		<item num="5" curr="1" size="12"><en>A black Knight on a black square</en><ko>어 블랙 나이트 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 검은 말</hg><res></res></item>
 		<item num="6" curr="1" size="12"><en>A black Rook on a black square</en><ko>어 블랙 룩 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 검은 차</hg><res></res></item>
 		<item num="7" curr="1" size="12"><en>A black Queen on a black square</en><ko>어 블랙 퀸 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 검은 여왕</hg><res></res></item>
 		<item num="8" curr="1" size="12"><en>A black King on a black square</en><ko>어 블랙 킹 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 검은 왕</hg><res></res></item>
 		<item num="9" curr="1" size="12"><en>A black pawn on a White square</en><ko>어 블랙 폰 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 검은 졸</hg><res></res></item>
-		<item num="10" curr="1" size="12"><en>A black Knight on a White square</en><ko>어 블랙 나이트 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 검은 말</hg><res></res></item>
-		<item num="11" curr="1" size="12"><en>A black Bishop on a White square</en><ko>어 블랙 비숍 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 검은 상</hg><res></res></item>
+		<item num="10" curr="1" size="12"><en>A black Bishop on a White square</en><ko>어 블랙 비숍 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 검은 상</hg><res></res></item>
+		<item num="11" curr="1" size="12"><en>A black Knight on a White square</en><ko>어 블랙 나이트 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 검은 말</hg><res></res></item>
 		<item num="12" curr="1" size="12"><en>A black Rook on a White square</en><ko>어 블랙 룩 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 검은 차</hg><res></res></item>
 		<item num="13" curr="1" size="12"><en>A black Queen on a White square</en><ko>어 블랙 퀸 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 검은 여왕</hg><res></res></item>
 		<item num="14" curr="1" size="12"><en>A black King on a White square</en><ko>어 블랙 킹 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 검은 왕</hg><res></res></item>
 		<item num="15" curr="1" size="12"><en>A White pawn on a black square</en><ko>어 화이트ㄴ 폰 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 하얀 졸</hg><res></res></item>
-		<item num="16" curr="1" size="12"><en>A White Knight on a black square</en><ko>어 화이트 나이트 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 하얀 말</hg><res></res></item>
-		<item num="17" curr="1" size="12"><en>A White Bishop on a black square</en><ko>어 화이트 비숍 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 하얀 상</hg><res></res></item>
+		<item num="16" curr="1" size="12"><en>A White Bishop on a black square</en><ko>어 화이트 비숍 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 하얀 상</hg><res></res></item>
+		<item num="17" curr="1" size="12"><en>A White Knight on a black square</en><ko>어 화이트 나이트 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 하얀 말</hg><res></res></item>
 		<item num="18" curr="1" size="12"><en>A White Rook on a black square</en><ko>어 화이트 룩 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 하얀 차</hg><res></res></item>
 		<item num="19" curr="1" size="12"><en>A White Queen on a black square</en><ko>어 화이트 퀸 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 하얀 여왕</hg><res></res></item>
 		<item num="20" curr="1" size="12"><en>A White King on a black square</en><ko>어 화이트 킹 온 어 블랙 스쿼어</ko><hg>검은 칸 위에 하얀 왕</hg><res></res></item>
 		<item num="21" curr="1" size="12"><en>A White pawn on a White square</en><ko>어 화이트 폰 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 하얀 졸</hg><res></res></item>
-		<item num="22" curr="1" size="12"><en>A White Knight on a White square</en><ko>어 화이트 나이트 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 하얀 말</hg><res></res></item>
-		<item num="23" curr="1" size="12"><en>A White Bishop on a White square</en><ko>어 화이트 비숍 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 하얀 상</hg><res></res></item>
+		<item num="22" curr="1" size="12"><en>A White Bishop on a White square</en><ko>어 화이트 비숍 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 하얀 상</hg><res></res></item>
+		<item num="23" curr="1" size="12"><en>A White Knight on a White square</en><ko>어 화이트 나이트 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 하얀 말</hg><res></res></item>
 		<item num="24" curr="1" size="12"><en>A White Rook on a White square</en><ko>어 화이트 룩 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 하얀 차</hg><res></res></item>
 		<item num="25" curr="1" size="12"><en>A White Queen on a White square</en><ko>어 화이트 퀸 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 하얀 여왕</hg><res></res></item>
 		<item num="26" curr="1" size="12"><en>A White King on a White square</en><ko>어 화이트 킹 온 어 화이트 스쿼어</ko><hg>하얀 칸 위에 하얀 왕</hg><res></res></item>
