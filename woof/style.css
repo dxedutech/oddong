@@ -45,6 +45,14 @@ body {
 
 body::-webkit-scrollbar { display: none; } /* 크롬, 오페라, 사파리 */
 
+canvas { /* 드래그 및 터치 옵션 차단 */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	user-select: none;
+	touch-action: none;
+	overscroll-behavior: none;
+}
+
 /*** Tangram */
 /* button */
 button { width: auto; height: auto; margin: 2px; padding: 0; background: none; border-radius: 6px; pointer-events: fill; }

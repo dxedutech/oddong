@@ -285,6 +285,8 @@ const getptp = v => { const { str } = v; }; /// SVG Path to Point
 		setinit({});
 
 		cv.el.addEventListener(pos.evt.start, e => {
+			e.preventDefault();
+
 			const xy = getpos({ x: e.clientX || e.touches[0].clientX, y: e.clientY || e.touches[0].clientY, wds: x.envm.wds });
 			pos.x = xy.x / t.s;
 			pos.y = xy.y / t.s;
@@ -295,10 +297,12 @@ const getptp = v => { const { str } = v; }; /// SVG Path to Point
 		cv.el.addEventListener(pos.evt.end, e => { pos.off = 1; });
 
 		cv.el.addEventListener(pos.evt.move, e => {
+			e.preventDefault();
+
 			const xy = getpos({ x: e.clientX ?? e.touches[0]?.clientX, y: e.clientY ?? e.touches[0]?.clientY, wds: x.envm.wds });
 			pos.x = xy.x / t.s;
 			pos.y = xy.y / t.s;
-		});
+		}, { passive: false });
 
 		await x.importmoduleu({ m: `${dx.basePath}/wore/btn.js` });
 
