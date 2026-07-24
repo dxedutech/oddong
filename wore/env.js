@@ -8,6 +8,13 @@ export default (r => {
   r.isMobile = supportsTouch() || isMobileDevice();
   r.resolution = { w: window.screen.width, h: window.screen.height, r: window.devicePixelRatio };
 
+	r.wds = { wh: window.scale || 1, dpr: window.devicePixelRatio, mob: false, tab: false };
+
+	const userAgent = navigator.userAgent.toLowerCase();
+	r.wds.mob = /iPhone|Android/i.test(navigator.userAgent);
+	r.wds.tab = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
+
+
 	const resizeu = v => {
 		const { w, h } = v;
 

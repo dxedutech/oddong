@@ -6,11 +6,11 @@ export function init() {
 
 
 /*** Canvas */
-const wds = { wh: window.scale || 1, dpr: window.devicePixelRatio, mob: false, tab: false };
+// const wds = { wh: window.scale || 1, dpr: window.devicePixelRatio, mob: false, tab: false };
 
-const userAgent = navigator.userAgent.toLowerCase();
-wds.mob = /iPhone|Android/i.test(navigator.userAgent);
-wds.tab = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
+// const userAgent = navigator.userAgent.toLowerCase();
+// wds.mob = /iPhone|Android/i.test(navigator.userAgent);
+// wds.tab = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
 // console.log(wds);
 
 document.body.style['overscroll-behavior'] = 'contain';
@@ -62,7 +62,7 @@ const ct = new content();
 
 /*** Mouse or Touch Position */
 const getpos = v => {
-  const { x, y } = v;
+  const { x, y, wds } = v;
   
   return { 
     x: (x - cv.el.getBoundingClientRect().left)*wds.wh, 
@@ -72,9 +72,7 @@ const getpos = v => {
 
 const pos = {x: 0, y: 0, on: 0, off: 0, evt: { start: '', move: '', end: '' }};
 
-pos.evt.start = wds.mob || wds.tab ? 'touchstart' : 'mousedown';
-pos.evt.move = wds.mob || wds.tab ? 'touchmove' : 'mousemove';
-pos.evt.end = wds.mob || wds.tab ? 'touchend' : 'mouseup';
+
 
 
 
@@ -287,10 +285,14 @@ const getptp = v => { const { str } = v; }; /// SVG Path to Point
 		await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
 		x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
 	
+		pos.evt.start = x.envm.wds.mob || x.envm.wds.tab ? 'touchstart' : 'mousedown';
+		pos.evt.move = x.envm.wds.mob || x.envm.wds.tab ? 'touchmove' : 'mousemove';
+		pos.evt.end = x.envm.wds.mob || x.envm.wds.tab ? 'touchend' : 'mouseup';
+
 		setinit({});
 
 		cv.el.addEventListener(pos.evt.start, e => {
-			const xy = getpos({ x: e.clientX || e.touches[0].clientX, y: e.clientY || e.touches[0].clientY });
+			const xy = getpos({ x: e.clientX || e.touches[0].clientX, y: e.clientY || e.touches[0].clientY, wds: x.envm.wds });
 			pos.x = xy.x / t.s;
 			pos.y = xy.y / t.s;
 			pos.on = 1;
@@ -300,7 +302,7 @@ const getptp = v => { const { str } = v; }; /// SVG Path to Point
 		cv.el.addEventListener(pos.evt.end, e => { pos.off = 1; });
 
 		cv.el.addEventListener(pos.evt.move, e => {
-			const xy = getpos({ x: e.clientX ?? e.touches[0]?.clientX, y: e.clientY ?? e.touches[0]?.clientY });
+			const xy = getpos({ x: e.clientX ?? e.touches[0]?.clientX, y: e.clientY ?? e.touches[0]?.clientY, wds: x.envm.wds });
 			pos.x = xy.x / t.s;
 			pos.y = xy.y / t.s;
 		});
