@@ -106,47 +106,7 @@ export function init() {
   };
 
   let dotsClick = [];
-  cvs.addEventListener('mousedown', (e) => {
-    t.r = cvs.getBoundingClientRect();
-
-    // env.js에서 계산된 scale 비율(x.envm.r)을 나누어 줍니다.
-    // main이 scale(0.5)로 축소되었다면 마우스 이동 거리도 2배로 늘려 원본(1280x1280) 좌표계로 복원합니다.
-    t.s = (x.envm && x.envm.r) ? x.envm.r : 1;
-
-    // 원본 CSS 좌표계 기준에 dpr을 곱해 캔버스 내부 물리 해상도 좌표로 변환
-    t.x = ((e.clientX - t.r.left) / t.s) * dpr;
-    t.y = ((e.clientY - t.r.top) / t.s) * dpr;
-
-    // 시작 여백(xy.x, xy.y)을 빼고 간격(xy.d)으로 나눈 뒤 반올림(Math.round)
-    t.col = Math.round((t.x - xy.x) / xy.d);
-    t.row = Math.round((t.y - xy.y) / xy.d);
-
-    // 격자 범위 체크 (가로 xy.o 칸 기준)
-    if (t.col >= 0 && t.col < xy.o && t.row >= 0 && t.row < (leng / xy.o)) {
-      t.n = t.col + xy.o * t.row;
-      t.dot = dots[t.n];
-
-      if (t.dot) {
-        // 실제 원 내부 클릭 여부 판정 (반지름 비교)
-        v.dx = t.x - t.dot.x;
-        v.dy = t.y - t.dot.y;
-        v.di = Math.sqrt(v.dx * v.dx + v.dy * v.dy);
-
-        if (v.di <= t.dot.r) {
-          console.log(`dot index: ${t.n}, col: ${t.col}, row: ${t.row}`);
-
-          if (dotsClick.indexOf(t.n) < 0) {
-            dotsClick.push(t.n);
-          } else {
-            let d = [];
-            dotsClick.forEach((e) => d.push(dots[e]));
-            if (d.length > 1) setTangents(d);
-            dotsClick = [];
-          }
-        }
-      }
-    }
-  });
+  const pos = {x: 0, y: 0, on: 0, off: 0, evt: { start: '', move: '', end: '' }};
 
 
 
@@ -154,6 +114,57 @@ export function init() {
 
 		await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
 		x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
+
+    pos.evt.start = x.envm.isMobile ? 'touchstart' : 'mousedown';
+		pos.evt.move = x.envm.isMobile ? 'touchmove' : 'mousemove';
+		pos.evt.end = x.envm.isMobile ? 'touchend' : 'mouseup';
+
+    cvs.addEventListener(pos.evt.start, (e) => {
+      t.r = cvs.getBoundingClientRect();
+
+      // env.js에서 계산된 scale 비율(x.envm.r)을 나누어 줍니다.
+      // main이 scale(0.5)로 축소되었다면 마우스 이동 거리도 2배로 늘려 원본(1280x1280) 좌표계로 복원합니다.
+      t.s = (x.envm && x.envm.r) ? x.envm.r : 1;
+
+      // 원본 CSS 좌표계 기준에 dpr을 곱해 캔버스 내부 물리 해상도 좌표로 변환
+      t.x = ((e.clientX - t.r.left) / t.s) * dpr;
+      t.y = ((e.clientY - t.r.top) / t.s) * dpr;
+
+      // 시작 여백(xy.x, xy.y)을 빼고 간격(xy.d)으로 나눈 뒤 반올림(Math.round)
+      t.col = Math.round((t.x - xy.x) / xy.d);
+      t.row = Math.round((t.y - xy.y) / xy.d);
+
+      // 격자 범위 체크 (가로 xy.o 칸 기준)
+      if (t.col >= 0 && t.col < xy.o && t.row >= 0 && t.row < (leng / xy.o)) {
+        t.n = t.col + xy.o * t.row;
+        t.dot = dots[t.n];
+
+        if (t.dot) {
+          // 실제 원 내부 클릭 여부 판정 (반지름 비교)
+          v.dx = t.x - t.dot.x;
+          v.dy = t.y - t.dot.y;
+          v.di = Math.sqrt(v.dx * v.dx + v.dy * v.dy);
+
+          if (v.di <= t.dot.r) {
+            console.log(`dot index: ${t.n}, col: ${t.col}, row: ${t.row}`);
+
+            if (dotsClick.indexOf(t.n) < 0) {
+              dotsClick.push(t.n);
+            } else {
+              let d = [];
+              dotsClick.forEach((e) => d.push(dots[e]));
+              if (d.length > 1) setTangents(d);
+              dotsClick = [];
+            }
+          }
+        }
+      }
+    });
+
+
+
+
+
 
 		const frameu = (v) => {
 	

@@ -51,60 +51,12 @@ const fbp = function () { /// Flip Book Page
   this.str = ['', ''];
 };
 
-const pos = { xy: [{ x: 0, y: 0 }, { x: 0, y: 0 }], on: false, g: 0.8 }; /// Mouse position
+// const pos = {x: 0, y: 0, on: 0, off: 0, evt: { start: '', move: '', end: '' }};
+const pos = { xy: [{ x: 0, y: 0 }, { x: 0, y: 0 }], on: false, g: 0.8, evt: { start: '', move: '', end: '' } }; /// Mouse position
 const getpow = (dx, dy) => { return dx * dx + dy * dy; };
 fb.pivot.pow = getpow(fb.wh.w, 0);
 
-/*** Event position */
-cvs.el.addEventListener('mousedown', e => setmousedown(e));
-const setmousedown = e => {
-  if (pos.on) return;
-  if (fb.pivot.pow < getpow(fb.pivot.x - e.offsetX, fb.pivot.y - e.offsetY)) return;
-  if (fb.page === fb.ps.length - 1 && fb.pivot.x < e.offsetX) return; /// Last Right none pape
-  if (fb.page === 0 && fb.pivot.x > e.offsetX) return; /// First left none page
-  
-  fb.on = true;
-  pos.xy[0].x = pos.xy[1].x = e.offsetX;
-  pos.xy[0].y = pos.xy[1].y = e.offsetY;
 
-  if (fb.pivot.x < e.offsetX) { fb.page = fb.page ? fb.page + 1 : fb.page; }
-  fb.off = fb.ps[fb.page].xy[0].x === fb.pivot.x ? 1 : -1;
-};
-
-cvs.el.addEventListener('mouseup', e => setmouseup(e));
-const setmouseup = e => {
-  if (!fb.on) return;
-
-  pos.on = true; /// Auto position
-  if (fb.page%2 && pos.xy[0].x > pos.xy[1].x || !(fb.page%2) && pos.xy[0].x < pos.xy[1].x) { /// Cancel flip
-    pos.xy[0].x = 0;
-    pos.xy[0].y = 0;
-    
-  } else { /// Continue flip - Current mouse position
-    pos.xy[1].x = fb.pivot.x + fb.ps[fb.page].wh[0].w*fb.off - pos.xy[1].x;
-    pos.xy[1].y = e.offsetY > fb.pivot.y ? fb.pivot.y - 0.1 : e.offsetY;
-    pos.xy[1].y = fb.pivot.y - pos.xy[1].y;
-  }
-
-  fb.on = false; /// Tracking mouse position
-};
-
-cvs.el.addEventListener('mousemove', e => {
-  if (pos.on) return;
-
-  if (fb.pivot.pow > getpow(fb.pivot.x - e.offsetX, fb.pivot.y - e.offsetY)) {
-    if(fb.page%2 && e.offsetX > fb.pivot.x || !(fb.page%2) && e.offsetX < fb.pivot.x || e.offsetY > fb.pivot.y){
-      setmouseup(e);
-      
-    }else{
-      pos.xy[1].x = e.offsetX;
-      pos.xy[1].y = e.offsetY;
-    }
-    
-  } else {
-    setmouseup(e);
-  }
-});
 
 /*** Draw */
 const setfill = c => (ctx.fillStyle = `rgba(${c}, ${c}, ${c}, 0.4)`);
@@ -360,6 +312,8 @@ const settitle = (v) => {
   v.e[10].innerText = xml.items[v.p + 1].en;
 };
 
+
+
 /*** Frame */
 (async (v) => {
 	const { x, w } = v;
@@ -419,6 +373,63 @@ const settitle = (v) => {
 
 	await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
 	x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
+
+
+  pos.evt.start = x.envm.isMobile ? 'touchstart' : 'mousedown';
+  pos.evt.move = x.envm.isMobile ? 'touchmove' : 'mousemove';
+  pos.evt.end = x.envm.isMobile ? 'touchend' : 'mouseup';
+
+
+  /*** Event position */
+  cvs.el.addEventListener(pos.evt.start, e => setmousedown(e));
+  const setmousedown = e => {
+    if (pos.on) return;
+    if (fb.pivot.pow < getpow(fb.pivot.x - e.offsetX, fb.pivot.y - e.offsetY)) return;
+    if (fb.page === fb.ps.length - 1 && fb.pivot.x < e.offsetX) return; /// Last Right none pape
+    if (fb.page === 0 && fb.pivot.x > e.offsetX) return; /// First left none page
+    
+    fb.on = true;
+    pos.xy[0].x = pos.xy[1].x = e.offsetX;
+    pos.xy[0].y = pos.xy[1].y = e.offsetY;
+
+    if (fb.pivot.x < e.offsetX) { fb.page = fb.page ? fb.page + 1 : fb.page; }
+    fb.off = fb.ps[fb.page].xy[0].x === fb.pivot.x ? 1 : -1;
+  };
+
+  cvs.el.addEventListener(pos.evt.end, e => setmouseup(e));
+  const setmouseup = e => {
+    if (!fb.on) return;
+
+    pos.on = true; /// Auto position
+    if (fb.page%2 && pos.xy[0].x > pos.xy[1].x || !(fb.page%2) && pos.xy[0].x < pos.xy[1].x) { /// Cancel flip
+      pos.xy[0].x = 0;
+      pos.xy[0].y = 0;
+      
+    } else { /// Continue flip - Current mouse position
+      pos.xy[1].x = fb.pivot.x + fb.ps[fb.page].wh[0].w*fb.off - pos.xy[1].x;
+      pos.xy[1].y = e.offsetY > fb.pivot.y ? fb.pivot.y - 0.1 : e.offsetY;
+      pos.xy[1].y = fb.pivot.y - pos.xy[1].y;
+    }
+
+    fb.on = false; /// Tracking mouse position
+  };
+
+  cvs.el.addEventListener(pos.evt.move, e => {
+    if (pos.on) return;
+
+    if (fb.pivot.pow > getpow(fb.pivot.x - e.offsetX, fb.pivot.y - e.offsetY)) {
+      if(fb.page%2 && e.offsetX > fb.pivot.x || !(fb.page%2) && e.offsetX < fb.pivot.x || e.offsetY > fb.pivot.y){
+        setmouseup(e);
+        
+      }else{
+        pos.xy[1].x = e.offsetX;
+        pos.xy[1].y = e.offsetY;
+      }
+      
+    } else {
+      setmouseup(e);
+    }
+  });
 
 	setframe({});
 
