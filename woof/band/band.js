@@ -108,8 +108,6 @@ export function init() {
   let dotsClick = [];
   const pos = {x: 0, y: 0, on: 0, off: 0, evt: { start: '', move: '', end: '' }};
 
-
-
 	(async () => {
 
 		await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
@@ -167,6 +165,20 @@ export function init() {
 
 
 		const frameu = (v) => {
+
+
+      if (x.btnm) { /// btns
+        if (Object.keys(x.btnm.evt).length) {
+          if (x.btnm.evt.s) {
+            if (x.btnm.evt.o === 'btnsband') btnsband[x.btnm.evt.s]({ e: x.btnm.evt.e });
+    
+            delete x.btnm.evt.o;
+            delete x.btnm.evt.s;
+            delete x.btnm.evt.e;
+          }
+        }
+        /// [`${v.s}u`]({e: v.e});
+      }
 	
 			requestAnimationFrame(() => frameu({}));
 		};
@@ -178,13 +190,33 @@ export function init() {
 })({ x: dx.hex, w: { r: 1, o: {}, wh: { w: 1280, h: 1280 } }, t: {}});
 
 /*** .so.btns */
-const btnstoto = {
+const btnsband = {
+  prevu: (v) => {
+    const { e } = v;
+
+		v.c = e.className.match(/on/) ? 'none' : 'block';
+		e.classList.toggle('on');
+
+  },
+  nextu: (v) => {
+    const { e } = v;
+
+		v.c = e.className.match(/on/) ? 'none' : 'block';
+		e.classList.toggle('on');
+
+  },
+  cleanu: (v) => {
+    const { e } = v;
+
+		v.c = e.className.match(/on/) ? 'none' : 'block';
+		e.classList.toggle('on');
+
+  },
 	playu: (v) => {
 		const { e } = v;
 
 		v.c = e.className.match(/on/) ? 'none' : 'block';
 		e.classList.toggle('on');
 
-		loy.mainu({});
 	},
 };
