@@ -125,8 +125,8 @@ export function init() {
       t.s = (x.envm && x.envm.r) ? x.envm.r : 1;
 
       // 원본 CSS 좌표계 기준에 dpr을 곱해 캔버스 내부 물리 해상도 좌표로 변환
-      t.x = ((e.clientX - t.r.left) / t.s) * dpr;
-      t.y = ((e.clientY - t.r.top) / t.s) * dpr;
+      t.x = (((e.clientX || e.touches[0].clientX)  - t.r.left) / t.s) * dpr;
+      t.y = (((e.clientY || e.touches[0].clientY) - t.r.top) / t.s) * dpr;
 
       // 시작 여백(xy.x, xy.y)을 빼고 간격(xy.d)으로 나눈 뒤 반올림(Math.round)
       t.col = Math.round((t.x - xy.x) / xy.d);
