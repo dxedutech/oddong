@@ -45,7 +45,8 @@ body {
 
 body::-webkit-scrollbar { display: none; } /* 크롬, 오페라, 사파리 */
 
-canvas { /* 드래그 및 터치 옵션 차단 */
+/* 드래그 및 터치 옵션 차단 */
+canvas { 
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	user-select: none;
