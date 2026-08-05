@@ -28,18 +28,46 @@ export function init() {
 
   // ctx.beginPath();
   let circle = new Path2D();
-  for (let i = 0; i < leng; i++) {
-    let x = (i % xy.o) * xy.d + xy.x;
-    let y = parseInt(i / xy.o) * xy.d + xy.y;
-    circle.moveTo(x + xy.r, y);
-    circle.arc(x, y, xy.r, 0, 2 * Math.PI, false);
-    dots.push({ x: x, y: y, r: xy.r, cc: true });
+  const setDots = (v) => {
+    const { } = v;
+
+    for (let i = 0; i < leng; i++) {
+      let x = (i % xy.o) * xy.d + xy.x;
+      let y = parseInt(i / xy.o) * xy.d + xy.y;
+      circle.moveTo(x + xy.r, y);
+      circle.arc(x, y, xy.r, 0, 2 * Math.PI, false);
+      dots.push({ x: x, y: y, r: xy.r, cc: true });
+    }
+    render({});
   }
-  ctx.fillStyle = 'green';
-  ctx.fill(circle);
-  ctx.lineWidth = 4 * dpr;
-  ctx.strokeStyle = 'pink';
-  ctx.stroke(circle);
+
+  let clicked = new Path2D();
+  const setClicks = (v) => {
+    const { d } = v;
+
+    clicked = new Path2D(); /// 클릭 경로를 초기화 
+
+    [].forEach.call(d, e => {
+      let x = (e % xy.o) * xy.d + xy.x;
+      let y = parseInt(e / xy.o) * xy.d + xy.y;
+      clicked.moveTo(x + xy.r, y);
+      clicked.arc(x, y, xy.r, 0, 2 * Math.PI, false);
+    });
+    render({});
+  }
+  
+  const render = (v) => {
+    ctx.fillStyle = 'green';
+    ctx.fill(circle);
+    ctx.lineWidth = 4 * dpr;
+    ctx.strokeStyle = 'pink';
+    ctx.stroke(circle);
+
+    ctx.fillStyle = 'red';
+    ctx.fill(clicked);
+    ctx.strokeStyle = 'pink';
+    ctx.stroke(clicked);
+  };
 
   const drawTangents = (p1, p2) => {
     let dx = p2.x - p1.x;
@@ -106,18 +134,22 @@ export function init() {
   };
 
   let dotsClick = [];
-  const pos = {x: 0, y: 0, on: 0, off: 0, evt: { start: '', move: '', end: '' }};
+  const pos = { x: 0, y: 0, on: 0, off: 0, evt: { start: '', move: '', end: '' } };
 
 	(async () => {
 
 		await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
 		x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
 
+    setDots({});
+
     pos.evt.start = x.envm.isMobile ? 'touchstart' : 'mousedown';
 		pos.evt.move = x.envm.isMobile ? 'touchmove' : 'mousemove';
 		pos.evt.end = x.envm.isMobile ? 'touchend' : 'mouseup';
 
     cvs.addEventListener(pos.evt.start, (e) => {
+      
+
       t.r = cvs.getBoundingClientRect();
 
       // env.js에서 계산된 scale 비율(x.envm.r)을 나누어 줍니다.
@@ -157,16 +189,11 @@ export function init() {
           }
         }
       }
+
+      setClicks({ d: dotsClick });
     });
 
-
-
-
-
-
 		const frameu = (v) => {
-
-
       if (x.btnm) { /// btns
         if (Object.keys(x.btnm.evt).length) {
           if (x.btnm.evt.s) {
