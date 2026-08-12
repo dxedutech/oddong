@@ -4,70 +4,125 @@ export function init() {
 	console.log('/// /// Band');
 }
 
+let btnreset = 0;
+const btnresettic = 15;
+
+window.scale = window.scale || 1;
+const cvs = document.querySelector('canvas');
+
+let wh = { w: 1280, h: 1280 };
+const dpr = window.devicePixelRatio;
+
+cvs.style.width = `${wh.w}px`;
+cvs.style.height = `${wh.h}px`;
+cvs.width = wh.w * dpr;
+cvs.height = wh.h * dpr;
+
+// const ctx = cvs.getContext('2d'); /// GPU
+const ctx = cvs.getContext('2d', { willReadFrequently: true }); /// CPU
+
+let xy = { x: 35 * dpr, y: 30 * dpr, r: 16 * dpr, o: 16, d: 81 * dpr };
+let dots = []; /// 16X16 256 도트
+let leng = xy.o * 16;
+
+let clicked = new Path2D();
+const setClicks = (v) => {
+  const { d } = v;
+
+  clicked = new Path2D(); /// 클릭 경로를 초기화 
+
+  [].forEach.call(d, e => {
+    let x = (e % xy.o) * xy.d + xy.x;
+    let y = parseInt(e / xy.o) * xy.d + xy.y;
+    clicked.moveTo(x + xy.r, y);
+    clicked.arc(x, y, xy.r, 0, 2 * Math.PI, false);
+  });
+  render({});
+}
+
+const render = (v) => {
+  ctx.fillStyle = 'green';
+  ctx.fill(circle);
+  ctx.lineWidth = 4 * dpr;
+  ctx.strokeStyle = 'pink';
+  ctx.stroke(circle);
+
+  ctx.fillStyle = 'red';
+  ctx.fill(clicked);
+  ctx.strokeStyle = 'pink';
+  ctx.stroke(clicked);
+};
+
+// ctx.beginPath();
+let circle = new Path2D();
+const setDots = (v) => {
+  const { } = v;
+
+  for (let i = 0; i < leng; i++) {
+    let x = (i % xy.o) * xy.d + xy.x;
+    let y = parseInt(i / xy.o) * xy.d + xy.y;
+    circle.moveTo(x + xy.r, y);
+    circle.arc(x, y, xy.r, 0, 2 * Math.PI, false);
+    dots.push({ x: x, y: y, r: xy.r, cc: true });
+  }
+  render({});
+}
+
+let dotsClick = [];
+
+
+
+
+class CanvasHistory {
+  constructor(cvs, ctx) {
+    this.cvs = cvs;
+    this.ctx = ctx;
+    this.a = []; // 이미지 데이터를 저장할 배열
+    this.step = -1;    // 현재 위치
+  }
+
+  // 현재 상태 저장
+  saveState() {
+    this.step++;
+    // 새로운 작업을 하면 현재 스텝 이후의 기록(Redo 기록)은 삭제
+    if (this.step < this.a.length) {
+      this.a.length = this.step;
+    }
+    // 캔버스 전체 픽셀 데이터 저장
+    const imageData = this.ctx.getImageData(0, 0, this.cvs.width, this.cvs.height);
+    this.a.push(imageData);
+  }
+
+  // 이전 단계로 복원 (Undo)
+  undo() {
+    if (this.step > 0) {
+      this.step--;
+      this.ctx.putImageData(this.a[this.step], 0, 0);
+    }
+  }
+
+  // 다음 단계로 복원 (Redo)
+  redo() {
+    if (this.step < this.a.length - 1) {
+      this.step++;
+      this.ctx.putImageData(this.a[this.step], 0, 0);
+    }
+  }
+
+  // 초기화 (init)
+  init() {
+    this.a = []; // 이미지 데이터를 저장할 배열
+    this.step = -1;    // 현재 위치
+    dotsClick = [];
+    this.ctx.clearRect(0, 0, cvs.width, cvs.height);
+    setDots({});
+  }
+}
+const history = new CanvasHistory(cvs, ctx);
 
 /*** module import env.js, btn.js */
 ((v) => {
-	const { x, w, t } = v;
-
-	window.scale = window.scale || 1;
-	const cvs = document.querySelector('canvas');
-
-	let wh = { w: 1280, h: 1280 };
-	const dpr = window.devicePixelRatio;
-
-	cvs.style.width = `${wh.w}px`;
-	cvs.style.height = `${wh.h}px`;
-	cvs.width = wh.w * dpr;
-	cvs.height = wh.h * dpr;
-
-	const ctx = cvs.getContext('2d');
-
-	let xy = { x: 35 * dpr, y: 30 * dpr, r: 16 * dpr, o: 16, d: 81 * dpr };
-	let dots = [];
-	let leng = xy.o * 16;
-
-  // ctx.beginPath();
-  let circle = new Path2D();
-  const setDots = (v) => {
-    const { } = v;
-
-    for (let i = 0; i < leng; i++) {
-      let x = (i % xy.o) * xy.d + xy.x;
-      let y = parseInt(i / xy.o) * xy.d + xy.y;
-      circle.moveTo(x + xy.r, y);
-      circle.arc(x, y, xy.r, 0, 2 * Math.PI, false);
-      dots.push({ x: x, y: y, r: xy.r, cc: true });
-    }
-    render({});
-  }
-
-  let clicked = new Path2D();
-  const setClicks = (v) => {
-    const { d } = v;
-
-    clicked = new Path2D(); /// 클릭 경로를 초기화 
-
-    [].forEach.call(d, e => {
-      let x = (e % xy.o) * xy.d + xy.x;
-      let y = parseInt(e / xy.o) * xy.d + xy.y;
-      clicked.moveTo(x + xy.r, y);
-      clicked.arc(x, y, xy.r, 0, 2 * Math.PI, false);
-    });
-    render({});
-  }
-  
-  const render = (v) => {
-    ctx.fillStyle = 'green';
-    ctx.fill(circle);
-    ctx.lineWidth = 4 * dpr;
-    ctx.strokeStyle = 'pink';
-    ctx.stroke(circle);
-
-    ctx.fillStyle = 'red';
-    ctx.fill(clicked);
-    ctx.strokeStyle = 'pink';
-    ctx.stroke(clicked);
-  };
+  const { x, t } = v;
 
   const drawTangents = (p1, p2) => {
     let dx = p2.x - p1.x;
@@ -133,13 +188,13 @@ export function init() {
     });
   };
 
-  let dotsClick = [];
+  
   const pos = { x: 0, y: 0, on: 0, off: 0, evt: { start: '', move: '', end: '' } };
 
 	(async () => {
 
 		await x.importmoduleu({ m: `${dx.basePath}/wore/env.js` });
-		x.envm.resizeu({ w: w.wh.w, h: w.wh.h });
+		x.envm.resizeu({ w: wh.w, h: wh.h });
 
     setDots({});
 
@@ -148,7 +203,6 @@ export function init() {
 		pos.evt.end = x.envm.isMobile ? 'touchend' : 'mouseup';
 
     cvs.addEventListener(pos.evt.start, (e) => {
-      
 
       t.r = cvs.getBoundingClientRect();
 
@@ -175,7 +229,8 @@ export function init() {
           v.dy = t.y - t.dot.y;
           v.di = Math.sqrt(v.dx * v.dx + v.dy * v.dy);
 
-          if (v.di <= t.dot.r) {
+          v.r = x.envm.isMobile ? t.dot.r*2 : t.dot.r; /// 모바일 터치시 용이하게
+          if (v.di <= v.r) { 
             console.log(`dot index: ${t.n}, col: ${t.col}, row: ${t.row}`);
 
             if (dotsClick.indexOf(t.n) < 0) {
@@ -189,9 +244,11 @@ export function init() {
           }
         }
       }
-
       setClicks({ d: dotsClick });
+
+      if (dotsClick.length === 0) history.saveState();
     });
+
 
 		const frameu = (v) => {
       if (x.btnm) { /// btns
@@ -207,6 +264,11 @@ export function init() {
         /// [`${v.s}u`]({e: v.e});
       }
 	
+      if (btnreset) { 
+        btnreset--; 
+        if (btnreset === 0) { setsiblings({ e: document.querySelector('.so.btns .btn.home'), s: 'on', b: false }); }
+      }
+
 			requestAnimationFrame(() => frameu({}));
 		};
 		frameu({});
@@ -214,36 +276,45 @@ export function init() {
 		await x.importmoduleu({ m: `${dx.basePath}/wore/btn.js` });
 		
 	})();
-})({ x: dx.hex, w: { r: 1, o: {}, wh: { w: 1280, h: 1280 } }, t: {}});
+})({ x: dx.hex, t: {} });
 
 /*** .so.btns */
+const setsiblings = v => {
+  const { e, s, b } = v;
+
+  v.a = e.parentElement.children;
+  Array.from(v.a).forEach(e => e.classList.remove(s));
+  if (b) e.classList.add(s);
+};
+
 const btnsband = {
   prevu: (v) => {
     const { e } = v;
 
-		v.c = e.className.match(/on/) ? 'none' : 'block';
-		e.classList.toggle('on');
+    setsiblings({ e: e, s: 'on', b: true });
+    history.undo();
 
+    btnreset = btnresettic;
   },
   nextu: (v) => {
     const { e } = v;
 
-		v.c = e.className.match(/on/) ? 'none' : 'block';
-		e.classList.toggle('on');
+		setsiblings({ e: e, s: 'on', b: true });
+    history.redo();
 
+    btnreset = btnresettic;
   },
   cleanu: (v) => {
     const { e } = v;
 
-		v.c = e.className.match(/on/) ? 'none' : 'block';
-		e.classList.toggle('on');
+		setsiblings({ e: e, s: 'on', b: true });
+    history.init();
 
+    btnreset = btnresettic;
   },
 	playu: (v) => {
 		const { e } = v;
 
-		v.c = e.className.match(/on/) ? 'none' : 'block';
-		e.classList.toggle('on');
-
+		setsiblings({ e: e, s: 'on', b: false });
 	},
 };
