@@ -379,20 +379,53 @@ const settitle = (v) => {
   pos.evt.move = x.envm.isMobile ? 'touchmove' : 'mousemove';
   pos.evt.end = x.envm.isMobile ? 'touchend' : 'mouseup';
 
+  /*** 터치/마우스 좌표 추출 함수 */
+  const getpos = e => {
+    // 터치 이벤트인 경우 첫 번째 터치 지점 사용
+    const rect = cvs.el.getBoundingClientRect();
+  
+    // 캔버스 내부 실제 해상도와 CSS 표시 크기 간의 비율 계산
+    const scaleX = cvs.el.width/rect.width;
+    const scaleY = cvs.el.height/rect.height;
+
+    let clientX, clientY;
+
+    // 터치 이벤트인 경우
+    if (e.touches && e.touches.length > 0) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else if (e.changedTouches && e.changedTouches.length > 0) {
+      clientX = e.changedTouches[0].clientX;
+      clientY = e.changedTouches[0].clientY;
+    } else {
+      // 마우스 이벤트인 경우
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+    
+    return {
+      x: (clientX - rect.left)*scaleX,
+      y: (clientY - rect.top)*scaleY
+    };
+  };
 
   /*** Event position */
   cvs.el.addEventListener(pos.evt.start, e => setmousedown(e));
   const setmousedown = e => {
     if (pos.on) return;
-    if (fb.pivot.pow < getpow(fb.pivot.x - e.offsetX, fb.pivot.y - e.offsetY)) return;
-    if (fb.page === fb.ps.length - 1 && fb.pivot.x < e.offsetX) return; /// Last Right none pape
-    if (fb.page === 0 && fb.pivot.x > e.offsetX) return; /// First left none page
+
+    const xy = getpos(e);
+    console.log("###", xy);
+    console.log("###", x.envm.resolution);
+    if (fb.pivot.pow < getpow(fb.pivot.x - xy.x, fb.pivot.y - xy.y)) return;
+    if (fb.page === fb.ps.length - 1 && fb.pivot.x < xy.x) return; /// Last Right none pape
+    if (fb.page === 0 && fb.pivot.x > xy.x) return; /// First left none page
     
     fb.on = true;
-    pos.xy[0].x = pos.xy[1].x = e.offsetX;
-    pos.xy[0].y = pos.xy[1].y = e.offsetY;
+    pos.xy[0].x = pos.xy[1].x = xy.x;
+    pos.xy[0].y = pos.xy[1].y = xy.y;
 
-    if (fb.pivot.x < e.offsetX) { fb.page = fb.page ? fb.page + 1 : fb.page; }
+    if (fb.pivot.x < xy.x) { fb.page = fb.page ? fb.page + 1 : fb.page; }
     fb.off = fb.ps[fb.page].xy[0].x === fb.pivot.x ? 1 : -1;
   };
 
@@ -406,8 +439,9 @@ const settitle = (v) => {
       pos.xy[0].y = 0;
       
     } else { /// Continue flip - Current mouse position
+      const xy = getpos(e);
       pos.xy[1].x = fb.pivot.x + fb.ps[fb.page].wh[0].w*fb.off - pos.xy[1].x;
-      pos.xy[1].y = e.offsetY > fb.pivot.y ? fb.pivot.y - 0.1 : e.offsetY;
+      pos.xy[1].y = xy.y > fb.pivot.y ? fb.pivot.y - 0.1 : xy.y;
       pos.xy[1].y = fb.pivot.y - pos.xy[1].y;
     }
 
@@ -417,13 +451,13 @@ const settitle = (v) => {
   cvs.el.addEventListener(pos.evt.move, e => {
     if (pos.on) return;
 
-    if (fb.pivot.pow > getpow(fb.pivot.x - e.offsetX, fb.pivot.y - e.offsetY)) {
-      if(fb.page%2 && e.offsetX > fb.pivot.x || !(fb.page%2) && e.offsetX < fb.pivot.x || e.offsetY > fb.pivot.y){
+    const xy = getpos(e);
+    if (fb.pivot.pow > getpow(fb.pivot.x - xy.x, fb.pivot.y - xy.y)) {
+      if(fb.page%2 && xy.x > fb.pivot.x || !(fb.page%2) && xy.x < fb.pivot.x || xy.y > fb.pivot.y){
         setmouseup(e);
-        
       }else{
-        pos.xy[1].x = e.offsetX;
-        pos.xy[1].y = e.offsetY;
+        pos.xy[1].x = xy.x;
+        pos.xy[1].y = xy.y;
       }
       
     } else {
